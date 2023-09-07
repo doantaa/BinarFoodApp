@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Binar Food App</string>
+    <string name="text_name">Hello Binarian</string>
+    <string name="text_greeting">Mau makan apa hari ini?</string>
+    <string name="text_banner_title">Diskon 30%</string>
+    <string name="text_banner_description">Pesan makanan lewat aplikasi dan dapatkan diskonmu</string>
+</resources>
