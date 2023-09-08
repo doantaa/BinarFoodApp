@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Binar Food App</string>
+    <string name="text_name">Hello Binarian</string>
+    <string name="text_greeting">Mau makan apa hari ini?</string>
+    <string name="text_banner_title">Diskon 30%</string>
+    <string name="text_banner_description">Pesan makanan lewat aplikasi dan dapatkan diskonmu</string>
+    <string name="text_category_1">Nasi</string>
+    <string name="text_category_2">Mie</string>
+    <string name="text_category_3">Cemilan</string>
+    <string name="text_category_4">Minuman</string>
+    <string name="text_menu_heading">List menu makanan</string>
+</resources>
