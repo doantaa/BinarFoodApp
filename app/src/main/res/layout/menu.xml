@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
-            android:text="List menu makanan"
+            android:text="@string/text_menu_heading"
             android:textColor="@color/black"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -38,18 +38,18 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_marginHorizontal="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
         app:layout_constraintTop_toBottomOf="@+id/cl_menu_title">
 
         <androidx.constraintlayout.helper.widget.Flow
-            app:flow_horizontalStyle="spread_inside"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:constraint_referenced_ids="ll_menu_1,ll_menu_2,ll_menu_3,ll_menu_4,ll_menu_5,ll_menu_6"
-            app:flow_wrapMode="aligned"
-            app:flow_verticalGap="18dp"/>
+            app:flow_horizontalStyle="spread_inside"
+            app:flow_verticalGap="18dp"
+            app:flow_wrapMode="aligned" />
 
         <LinearLayout
             android:id="@+id/ll_menu_1"
@@ -65,17 +65,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ayam Bakar"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/text_menu_name_1"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 50.000"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="14sp"/>
+                android:text="@string/text_menu_price_1"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -94,17 +94,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ayam Goreng"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/text_menu_name_2"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 40.000"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="14sp"/>
+                android:text="@string/text_menu_price_2"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -123,17 +123,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ayam Geprek"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/text_menu_name_3"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 45.000"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="14sp"/>
+                android:text="@string/text_menu_price_3"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -152,17 +152,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sate Usus Ayam"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/text_menu_name_4"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 50.000"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="14sp"/>
+                android:text="@string/text_menu_price_4"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -181,17 +181,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bakso Sapi"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/text_menu_name_5"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 80.000"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="14sp"/>
+                android:text="@string/text_menu_price_5"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -210,21 +210,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nasi Campur"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="13sp"
-                android:layout_marginTop="8dp"/>
+                android:text="@string/text_menu_name_6"
+                android:textSize="13sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rp 60.000"
                 android:fontFamily="@font/inter_semibold"
-                android:textSize="14sp"/>
+                android:text="@string/text_menu_price_6"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
