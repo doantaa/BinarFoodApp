@@ -1,7 +1,8 @@
-package com.binar.binarfoodapp
+package com.binar.binarfoodapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.binar.binarfoodapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
