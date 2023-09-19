@@ -1,4 +1,4 @@
-package com.binar.binarfoodapp.presentation
+package com.binar.binarfoodapp.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
