@@ -21,4 +21,6 @@
     <string name="text_menu_price_5" translatable="false">Rp 80.000</string>
     <string name="text_menu_name_6" translatable="false">Nasi Campur</string>
     <string name="text_menu_price_6" translatable="false">Rp 60.000</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
