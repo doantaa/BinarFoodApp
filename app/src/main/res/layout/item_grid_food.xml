@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="8dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
-        android:text="@string/text_menu_price_1"
+        tools:text="RP 50000"
         android:textSize="14sp" />
 
 </LinearLayout>

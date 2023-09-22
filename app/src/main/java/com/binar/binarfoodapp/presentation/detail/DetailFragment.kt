@@ -7,13 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import coil.load
+import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.databinding.FragmentDetailBinding
 import com.binar.binarfoodapp.model.Food
 
 
 class DetailFragment : Fragment() {
 
+    private var counter = 1
     private lateinit var binding: FragmentDetailBinding
     val food : Food? by lazy {
         DetailFragmentArgs.fromBundle(arguments as Bundle).food
@@ -38,6 +41,39 @@ class DetailFragment : Fragment() {
         binding.clLocation.setOnClickListener{
             navigateToMap()
         }
+        binding.buttonBack.setOnClickListener{
+            findNavController().popBackStack()
+        }
+
+        binding.btnMinus.setOnClickListener{
+            decreaseCounter()
+        }
+
+        binding.btnPlus.setOnClickListener{
+            increaseCounter()
+        }
+
+    }
+
+    private fun increaseCounter() {
+        counter++
+        refreshCounterView()
+    }
+
+    private fun decreaseCounter() {
+        if (counter > 1) counter--
+        refreshCounterView()
+    }
+
+    private fun refreshCounterView() {
+        binding.btnMinus.alpha = if(counter == 1)  0.5F else 1.0F
+        binding.tvCounter.text = counter.toString()
+        binding.tvPrice.text = getTotalPrice()
+    }
+
+    private fun getTotalPrice(): String {
+        val totalPrice = counter * (food?.price ?: 0)
+        return "RP $totalPrice"
     }
 
     private fun navigateToMap() {
@@ -50,9 +86,11 @@ class DetailFragment : Fragment() {
 
     private fun showFoodData() {
         binding.tvMenuName.text = food?.name
-        binding.tvMenuPrice.text = food?.price.toString()
+        binding.tvMenuPrice.text = "${getString(R.string.rp)} ${food?.price.toString()}"
         binding.ivMenuImage.load(food?.imageUrl)
         binding.tvMenuDescription.text = food?.description
+        binding.tvCounter.text = counter.toString()
+        binding.tvPrice.text = getTotalPrice()
     }
 
 }
