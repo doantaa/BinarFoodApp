@@ -24,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/button_back"
             android:layout_width="46.5dp"
             android:layout_height="46.5dp"
             android:src="@drawable/ic_back"
@@ -44,7 +45,7 @@
         android:id="@+id/cv_menu_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="34dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="-35dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
@@ -63,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_semibold"
-                android:text="Ayam Goreng"
+                tools:text="Ayam Goreng"
                 android:textColor="@color/black"
                 android:textSize="23sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,23 +75,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_medium"
-                android:text="Rp. 40.000"
+                tools:text="Rp. 40.000"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_menu_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:alpha="0.5"
                 android:fontFamily="@font/inter"
-                android:text="Ayam goreng pakai tepung sajiku serbaguna, digoreng dengan minyak terbaik memberikan anda rasa kriuk yang sempurna"
+                tools:text="Ayam goreng pakai tepung sajiku serbaguna, digoreng dengan minyak terbaik memberikan anda rasa kriuk yang sempurna"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_menu_name" />
 
@@ -100,6 +101,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
@@ -121,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Lokasi"
+            tools:text="@string/text_location_title"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@id/iv_map_icon"
@@ -132,8 +134,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="@font/inter"
-            android:text="Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345"
-            android:textSize="12sp"
+            android:text="@string/text_location_detail"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_map_icon"
@@ -141,6 +143,81 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/cv_add_to_cart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_minus"
+            android:layout_width="30dp"
+            android:alpha="0.5"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_minus" />
+
+        <TextView
+
+            android:id="@+id/tv_counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="18sp"
+            tools:text="1" />
+
+        <ImageView
+            android:id="@+id/btn_plus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_plus" />
+
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_add_to_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginBottom="48dp"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/primary"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingVertical="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="21sp"
+                tools:text="Rp 18.000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
+                android:text="@string/text_add_to_cart"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,4 +10,6 @@
     <string name="text_category_3">Cemilan</string>
     <string name="text_category_4">Minuman</string>
     <string name="text_menu_heading">List menu makanan</string>
+    <string name="text_location_title">Location</string>
+    <string name="text_add_to_cart">Add to cart</string>
 </resources>

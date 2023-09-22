@@ -9,18 +9,8 @@
     <string name="text_category_3">Snack</string>
     <string name="text_category_4">Drink</string>
     <string name="text_menu_heading">Food menu list</string>
-    <string name="text_menu_name_1" translatable="false">Ayam Bakar</string>
-    <string name="text_menu_price_1" translatable="false">Rp 50.000</string>
-    <string name="text_menu_name_2" translatable="false">Ayam Goreng</string>
-    <string name="text_menu_price_2" translatable="false">Rp 40.000</string>
-    <string name="text_menu_name_3" translatable="false">Ayam Geprek</string>
-    <string name="text_menu_price_3" translatable="false">Rp 45.000</string>
-    <string name="text_menu_name_4" translatable="false">Sate Usus Ayam</string>
-    <string name="text_menu_price_4" translatable="false">Rp 50.000</string>
-    <string name="text_menu_name_5" translatable="false">Bakso Sapi</string>
-    <string name="text_menu_price_5" translatable="false">Rp 80.000</string>
-    <string name="text_menu_name_6" translatable="false">Nasi Campur</string>
-    <string name="text_menu_price_6" translatable="false">Rp 60.000</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rp" translatable="false">Rp</string>
+    <string name="text_location_title">Lokasi</string>
+    <string name="text_location_detail" translatable="false">Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345</string>
+    <string name="text_add_to_cart">Tambah ke keranjang</string>
 </resources>
