@@ -2,6 +2,8 @@ package com.binar.binarfoodapp.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.databinding.ActivityMainBinding
 
@@ -14,5 +16,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setupBottomNav()
+    }
+
+    private fun setupBottomNav() {
+        val navController = findNavController(R.id.main_nav_host_fragment)
+        binding.navView.setupWithNavController(navController)
     }
 }
