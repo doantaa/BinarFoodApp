@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.binar.binarfoodapp.ViewHolderBinder
+import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemGridFoodBinding
 import com.binar.binarfoodapp.databinding.ItemLinearFoodBinding
 import com.binar.binarfoodapp.model.Food
