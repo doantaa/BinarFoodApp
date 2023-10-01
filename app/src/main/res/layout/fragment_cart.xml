@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".presentation.cart.CartFragment">
 
     <ImageView
         android:id="@+id/iv_header_background"
         android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:outlineAmbientShadowColor="@color/black"
         android:scaleType="centerCrop"
-        android:layout_height="112dp"
         android:src="@drawable/bg_header"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -18,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Keranjang"
         android:textSize="22sp"
@@ -26,5 +28,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_cart_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_background"
+        tools:listitem="@layout/item_cart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
