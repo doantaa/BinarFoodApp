@@ -2,7 +2,9 @@ package com.binar.binarfoodapp.presentation.detail
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.binar.binarfoodapp.databinding.ActivityDetailBinding
@@ -15,22 +17,38 @@ class DetailActivity : AppCompatActivity() {
         ActivityDetailBinding.inflate(layoutInflater)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setOnclickListener()
+        setClickListener()
     }
 
-    private fun setOnclickListener() {
+    private fun setClickListener() {
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
+
+        binding.clLocation.setOnClickListener{
+            navigateToMap()
+        }
+
+
+
+    }
+
+    private fun navigateToMap() {
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://maps.app.goo.gl/h4wQKqaBuXzftGK77")
+        )
+        startActivity(intent)
     }
 
 
     private fun bindFoodInfo(food: Food) {
         binding.ivMenuImage.load(food.imageUrl)
-        binding.tvPrice.text = food.price.toCurrencyFormat("IDR")
+        binding.tvPrice.text = food.price.toCurrencyFormat()
         binding.tvMenuName.text = food.name
     }
 

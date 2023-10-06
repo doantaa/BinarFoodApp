@@ -14,7 +14,7 @@ class CartItemListViewHolder(
 ): RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Food>{
     override fun bind(item: Food) {
         binding.tvMenuName.text = item.name
-        binding.tvCountPrice.text = item.price.toCurrencyFormat("IDR")
+        binding.tvCountPrice.text = item.price.toCurrencyFormat()
         binding.ivMenuImage.load(item.imageUrl)
     }
 
