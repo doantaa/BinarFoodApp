@@ -21,7 +21,7 @@ class GridFoodItemListViewHolder (
             crossfade(true)
         }
         binding.tvMenuName.text = item.name
-        binding.tvMenuPrice.text = item.price.toCurrencyFormat("IDR")
+        binding.tvMenuPrice.text = item.price.toCurrencyFormat()
     }
 }
 
@@ -36,6 +36,6 @@ class LinearFoodItemListViewHolder (
 
         binding.ivMenuImage.load(item.imageUrl)
         binding.tvMenuName.text = item.name
-        binding.tvMenuPrice.text = item.price.toCurrencyFormat("IDR")
+        binding.tvMenuPrice.text = item.price.toCurrencyFormat()
     }
 }
