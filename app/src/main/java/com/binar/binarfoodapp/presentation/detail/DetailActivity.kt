@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.binar.binarfoodapp.databinding.ActivityDetailBinding
-import com.binar.binarfoodapp.model.Food
+import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.utils.toCurrencyFormat
 
 class DetailActivity : AppCompatActivity() {
@@ -46,18 +46,18 @@ class DetailActivity : AppCompatActivity() {
     }
 
 
-    private fun bindFoodInfo(food: Food) {
-        binding.ivMenuImage.load(food.imageUrl)
-        binding.tvPrice.text = food.price.toCurrencyFormat()
-        binding.tvMenuName.text = food.name
+    private fun bindFoodInfo(menu: Menu) {
+        binding.ivMenuImage.load(menu.imageUrl)
+        binding.tvPrice.text = menu.price.toCurrencyFormat()
+        binding.tvMenuName.text = menu.name
     }
 
 
     companion object {
         private const val FOOD = "FOOD"
-        fun startActivity(context: Context, food: Food) {
+        fun startActivity(context: Context, menu: Menu) {
             val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(FOOD, food)
+            intent.putExtra(FOOD, menu)
             context.startActivity(intent)
         }
     }

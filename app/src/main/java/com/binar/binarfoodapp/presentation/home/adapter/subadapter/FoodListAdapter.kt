@@ -9,21 +9,21 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemGridFoodBinding
 import com.binar.binarfoodapp.databinding.ItemLinearFoodBinding
-import com.binar.binarfoodapp.model.Food
+import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.presentation.home.adapter.viewholder.GridFoodItemListViewHolder
 import com.binar.binarfoodapp.presentation.home.adapter.viewholder.LinearFoodItemListViewHolder
 
 class FoodListAdapter(
     var adapterLayoutMode: AdapterLayoutMode,
-    private val onItemClick: (Food) -> Unit
+    private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Food>(){
-        override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
+    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Menu>(){
+        override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
+        override fun areContentsTheSame(oldItem: Menu, newItem: Menu): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -53,15 +53,15 @@ class FoodListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder as ViewHolderBinder<Food>).bind(differ.currentList[position])
+        (holder as ViewHolderBinder<Menu>).bind(differ.currentList[position])
     }
 
     override fun getItemViewType(position: Int): Int {
         return adapterLayoutMode.ordinal
     }
 
-    fun setData(foodData: List<Food>) {
-        differ.submitList(foodData)
+    fun setData(menuData: List<Menu>) {
+        differ.submitList(menuData)
     }
 
     fun refreshList() {

@@ -1,13 +1,13 @@
-package com.binar.binarfoodapp.data
+package com.binar.binarfoodapp.data.dummy
 
 import com.binar.binarfoodapp.model.Category
 
 
-interface CategoryDataSource {
+interface DummyCategoryDataSource {
     fun getCategory() : List<Category>
 }
 
-class CategoryDataSourceImpl(): CategoryDataSource {
+class DummyCategoryDataSourceImpl(): DummyCategoryDataSource {
     override fun getCategory(): List<Category> {
         return mutableListOf(
             Category(

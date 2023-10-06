@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
 @Parcelize
-data class Food(
-    val id: String = UUID.randomUUID().toString(),
+data class Menu(
+    val id: Int? = null,
     val name: String,
     val price: Int,
     val imageUrl: String,
