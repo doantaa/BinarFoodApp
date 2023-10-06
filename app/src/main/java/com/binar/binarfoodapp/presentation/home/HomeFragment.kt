@@ -4,31 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.CategoryDataSource
-import com.binar.binarfoodapp.data.CategoryDataSourceImpl
-import com.binar.binarfoodapp.data.FoodDataSource
-import com.binar.binarfoodapp.data.FoodDataSourceImpl
+import com.binar.binarfoodapp.data.dummy.DummyCategoryDataSource
+import com.binar.binarfoodapp.data.dummy.DummyCategoryDataSourceImpl
+import com.binar.binarfoodapp.data.local.database.AppDatabase
+import com.binar.binarfoodapp.data.local.database.datasource.MenuDataSourceImpl
+import com.binar.binarfoodapp.data.repository.MenuRepository
+import com.binar.binarfoodapp.data.repository.MenuRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
-import com.binar.binarfoodapp.model.Category
-import com.binar.binarfoodapp.model.Food
+import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.presentation.detail.DetailActivity
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.AdapterLayoutMode
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.CategoryListAdapter
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.FoodListAdapter
+import com.binar.binarfoodapp.utils.GenericViewModelFactory
+import com.binar.binarfoodapp.utils.proceedWhen
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val foodDataSource: FoodDataSource by lazy {
-        FoodDataSourceImpl()
+
+    private val viewModel: HomeViewModel by viewModels {
+        val categoryDataSource = DummyCategoryDataSourceImpl()
+        val database= AppDatabase.getInstance(requireContext())
+        val menuDao = database.menuDao()
+        val menuDataSource = MenuDataSourceImpl(menuDao)
+        val repo: MenuRepository = MenuRepositoryImpl(menuDataSource,categoryDataSource)
+        GenericViewModelFactory.create(HomeViewModel(repo))
     }
-    private val categoryDataSource : CategoryDataSource by lazy {
-        CategoryDataSourceImpl()
+
+
+
+    private val categoryDataSource: DummyCategoryDataSource by lazy {
+        DummyCategoryDataSourceImpl()
     }
 
 
@@ -46,7 +61,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun navigateToActivityDetail(it: Food) {
+    private fun navigateToActivityDetail(it: Menu) {
         DetailActivity.startActivity(requireContext(), it)
     }
 
@@ -61,8 +76,26 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        fetchData()
         setupSwitch()
 
+    }
+
+    private fun fetchData() {
+        viewModel.menuData.observe(viewLifecycleOwner){
+            it.proceedWhen(
+                doOnSuccess = {result ->
+                    binding.rvFoods.isVisible = true
+                    result.payload?.let {menu ->
+                        foodListAdapter.setData(menu)
+                    }
+                    binding.tvListTitle.text = "Success"
+                },
+                doOnLoading = {
+                    binding.tvListTitle.text = ("Loading")
+                }
+            )
+        }
     }
 
     private fun setupSwitch() {
@@ -89,14 +122,13 @@ class HomeFragment : Fragment() {
         setupMenuRecyclerView()
     }
 
-    private fun setupMenuRecyclerView(){
+    private fun setupMenuRecyclerView() {
         val span = if (foodListAdapter.adapterLayoutMode == AdapterLayoutMode.LINEAR) 1 else 2
         binding.rvFoods.adapter = foodListAdapter
         binding.rvFoods.layoutManager = GridLayoutManager(requireContext(), span)
-        foodListAdapter.setData(foodDataSource.getFoodData())
     }
 
-    private fun setupCategoryRecyclerView(){
+    private fun setupCategoryRecyclerView() {
         binding.rvCategory.adapter = categoryListAdapter
         categoryListAdapter.setData(categoryDataSource.getCategory())
 

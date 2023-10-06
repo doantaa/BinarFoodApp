@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartBinding
-import com.binar.binarfoodapp.model.Food
+import com.binar.binarfoodapp.model.Menu
 
 class CartListAdapter():RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Food>(){
-        override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
+    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Menu>(){
+        override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
+        override fun areContentsTheSame(oldItem: Menu, newItem: Menu): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -33,10 +33,10 @@ class CartListAdapter():RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolderBinder<Food>).bind(differ.currentList[position])
+        (holder as ViewHolderBinder<Menu>).bind(differ.currentList[position])
     }
 
-    fun setData(foodData:List<Food>){
-        differ.submitList(foodData)
+    fun setData(menuData:List<Menu>){
+        differ.submitList(menuData)
     }
 }

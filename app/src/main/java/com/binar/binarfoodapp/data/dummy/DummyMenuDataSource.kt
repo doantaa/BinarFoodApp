@@ -1,64 +1,64 @@
-package com.binar.binarfoodapp.data
+package com.binar.binarfoodapp.data.dummy
 
-import com.binar.binarfoodapp.model.Food
+import com.binar.binarfoodapp.model.Menu
 
-interface FoodDataSource {
-    fun getFoodData() : List<Food>
+interface DummyMenuDataSource {
+    fun getMenuData() : List<Menu>
 }
 
-class FoodDataSourceImpl(): FoodDataSource {
-    override fun getFoodData(): List<Food> {
+class DummyMenuDataSourceImpl(): DummyMenuDataSource {
+    override fun getMenuData(): List<Menu> {
         return mutableListOf(
-            Food(
+            Menu(
                 name = "Ayam Goreng",
                 price = 50000,
                 description = "Ini adalah ayam yang digoreng dengan minyak pilihan",
                 imageUrl = "https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/ayam_goreng.png"
             ),
 
-            Food(
+            Menu(
                 name = "Ayam Bakar",
                 price = 45000,
                 description = "Ini adalah ayam bakar yang dibakar dengan api pilihan",
                 imageUrl = "https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/ayam_bakar.png"
             ),
 
-            Food(
+            Menu(
                 name = "Ayam Geprek",
                 price = 30000,
                 description = "Ini adalah ayam goreng yang digeprek dengan batu pilihan",
                 imageUrl = "https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/ayam_geprek.png"
             ),
 
-            Food(
+            Menu(
                 name = "Bakso",
                 price = 44000,
                 description = "Ini adalah bakso yang digiling dengan daging pilihan",
                 imageUrl = "https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/bakso.png"
             ),
 
-            Food(
+            Menu(
                 name = "Nasi Campur",
                 price = 80000,
                 description = "Ini adalah Nasi yang dicampur pakai beras pilihan",
                 imageUrl = "https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/nasi_campur.png"
             ),
 
-            Food(
+            Menu(
                 name = "Sate Usus",
                 price = 15000,
                 description = "Ini adalah Sate usus yang ditusuk pakai lidi pilihan",
                 imageUrl = "https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/sate_usus.png"
             ),
 
-            Food(
+            Menu(
                 name = "Pizza Rames",
                 price = 5000,
                 description = "Ini adalah pizza yang dibuat dengan campuran nasi rames membuat anda menikmati karbohidrat ganda saat gigitan pertama",
                 imageUrl = "https://lh3.googleusercontent.com/fife/AKsag4OqGUyp45EPWKkAOp0w_Pzj9q_T7IIQbkrx__-mkhH-Xq4hPKh2BMFrUXIN12cXcQWwY3R5rGxQGkiOpv-if17XzwdconmonNnOQd6Kdv1k6kdWUQ52PdasXKo0eM52qju_ogaEYTw0bB9yF-LNFVBC1HIAnSqHhngubla-qgKcPQiqfakBF90dJJjraeo-dDUC_OWADWTQIAjK071Qj0CvWQ5UbdIRpuo6haDZ7ilukY8i0zn2YmW37sIFdINA3EnNzlsf4vQSFyBnh-vPwfnsTCo9poBM5rlCv7HdbzMbJegbmSFm6qkER7neotBzaPMpF-d0MexL8JdrDAitSqtAqicr3MJ3BS81gyAm_5UvpprLCtRaAkh_EYd7Lk32SQrugAcaZf8fQPUMhketzQeUSu2aqzHwMnjT1aeLwROSUJsTfi6vg9Q9XCk4UIkaY0U14PD07QGf8iuOaFcSJwi7zJgsI2have-Ykx6jbqExs6AN0RTZAuWm4KlwseMCmH34f3IWJRArZd8ZUspMWUD5KJC56Dln8q3zyBKLeGA2v-tt7e7zWPcri0-qySJRK2I-cal96usjKqL3i9q7MaZLVlzLkoATyw9zWtfl-rgsoHK8blqG1Q8NsY2pxApMkNfIgxlR-nJsMX2ADIKh5RNp5n9wQmthGNgml2Ev9p83VhTJXta3wlOyrqKRo9xn9L2FR__mU29SFqniphwTVxC2wlEuqUHbXpjDUCQRZ82VA0bK_q_eX2cbKwbbrR3UCGCjKx_SnCxx_weOmijIaNxFpi7a1tKAOl9FbRkVAjgmbNBlBNQSzs2J3te5rdOruPpH__5gvMhy1Zt9LfXwZCVnSMPbBEVvHyTzqj28l5Xan72ZfdWT8k3HxUop6B6Z5AJfSrrT7esh2dVjkfa3ECEfPYKZTdIXE4VmbpDUnm8oqSIoMewQdIa0FRwA1LIvZAXEB03fhek4c0NYeKSG6E-tkCAvlDAmd6Zfxeqydc2fJKJ-WT8HVC_E2EzBYjxxMIpwmFwCnxHNzLCAbtH6sxL7y4dag6dcVvhIPMDcSEI0sK7MouP6rr-_J1Oj8QHufiZC-hd91OaFN1vQABsh7iXNGxcrDF52NPCjd8bXhcCgs2l0yb7oKm2DDjSZ_iOxGdDMoTninxdlfW0Wy10zPkO2NsFYcK-_TXSOHRdmZSowEjW66_icrT4NdlHRqJ8vu3OQYoIYuPJXKbO8c6Tqwiw1_EWqJTjbwLhsXP8khb21EQntX7k02IaKVrh1-y9OVvgSgjRHxg6b-HPgFeZ99mF3mJjtOR3X1Qbsw-aECs7KrjvLhnEGrADHtem79j_bKWpEEa0NKowqXXcme-3ESU6GGJB6_YoLc-QTBt2eAyS4NMdAHNmZL6dBlOnXzgF_d3aL3stdJ4FvIruJZYlpDLk0UjvX1CHHHm1SmcAXJqtBhmS12FaywXZXQ0tgHS95fzgQZAvKimGMUNXlFaHVwwl12GeCiP4MuvVLofW7iys_0k4Q7viRirADXvYVClHiLz77o68Vj5M1uJ-mud9VX0_ahfwUsf1prTbM_9rZKiDrHxQZoIjC375kvA=w1920-h883"
             ),
 
-            Food(
+            Menu(
                 name = "Kopi bergambar",
                 price = 5000,
                 description = "Digambar pakai cetakan late yang dihadirkan langsung dari depok, menggunakan kopi kapal api dan susu nasional. Bonus koasong selama persediaan masih ada",
