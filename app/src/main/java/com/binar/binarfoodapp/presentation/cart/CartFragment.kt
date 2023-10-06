@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.binarfoodapp.data.FoodDataSource
 import com.binar.binarfoodapp.data.FoodDataSourceImpl
 import com.binar.binarfoodapp.databinding.FragmentCartBinding
-import com.binar.binarfoodapp.presentation.home.adapter.FoodListAdapter
 
 
 class CartFragment : Fragment() {

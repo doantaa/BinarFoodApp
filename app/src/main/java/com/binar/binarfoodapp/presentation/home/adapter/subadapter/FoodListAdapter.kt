@@ -1,4 +1,4 @@
-package com.binar.binarfoodapp.presentation.home.adapter
+package com.binar.binarfoodapp.presentation.home.adapter.subadapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +10,8 @@ import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemGridFoodBinding
 import com.binar.binarfoodapp.databinding.ItemLinearFoodBinding
 import com.binar.binarfoodapp.model.Food
+import com.binar.binarfoodapp.presentation.home.adapter.viewholder.GridFoodItemListViewHolder
+import com.binar.binarfoodapp.presentation.home.adapter.viewholder.LinearFoodItemListViewHolder
 
 class FoodListAdapter(
     var adapterLayoutMode: AdapterLayoutMode,

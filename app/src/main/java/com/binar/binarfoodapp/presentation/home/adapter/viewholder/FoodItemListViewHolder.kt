@@ -1,4 +1,4 @@
-package com.binar.binarfoodapp.presentation.home.adapter
+package com.binar.binarfoodapp.presentation.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -17,7 +17,9 @@ class GridFoodItemListViewHolder (
             onItemClick.invoke(item)
         }
 
-        binding.ivMenuImage.load(item.imageUrl)
+        binding.ivMenuImage.load(item.imageUrl){
+            crossfade(true)
+        }
         binding.tvMenuName.text = item.name
         binding.tvMenuPrice.text = item.price.toCurrencyFormat("IDR")
     }
