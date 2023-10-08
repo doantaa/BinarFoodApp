@@ -1,4 +1,4 @@
-package com.binar.binarfoodapp.presentation.cart
+package com.binar.binarfoodapp.presentation.cart.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load

@@ -1,4 +1,4 @@
-package com.binar.binarfoodapp.presentation.cart
+package com.binar.binarfoodapp.presentation.cart.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartBinding
+import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.model.Menu
 
-class CartListAdapter():RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CartListAdapter(
+    private val cartListener: CartListener? = null
+):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Menu>(){
         override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
@@ -39,4 +42,11 @@ class CartListAdapter():RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun setData(menuData:List<Menu>){
         differ.submitList(menuData)
     }
+}
+
+interface CartListener {
+    fun onPlusTotalItemCartClicked(cart: Cart)
+    fun onMinusTotalItemCartClicked(cart: Cart)
+    fun onRemoveCartClicked(cart: Cart)
+    fun onUserDoneEditingNotes(cart: Cart)
 }
