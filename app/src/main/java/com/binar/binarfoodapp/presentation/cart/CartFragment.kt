@@ -1,5 +1,6 @@
 package com.binar.binarfoodapp.presentation.cart
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.binar.binarfoodapp.databinding.FragmentCartBinding
 import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.presentation.cart.adapter.CartListAdapter
 import com.binar.binarfoodapp.presentation.cart.adapter.CartListener
+import com.binar.binarfoodapp.presentation.checkout.CheckoutActivity
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.hideKeyboard
 import com.binar.binarfoodapp.utils.proceedWhen
@@ -71,6 +73,13 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeData()
+        setClickListener()
+    }
+
+    private fun setClickListener() {
+        binding.btnCheckout.setOnClickListener {
+            context?.startActivity(Intent(requireContext(), CheckoutActivity::class.java))
+        }
     }
 
     private fun observeData() {
