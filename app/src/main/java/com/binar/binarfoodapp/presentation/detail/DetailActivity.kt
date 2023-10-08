@@ -52,7 +52,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.addToCartResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "Menu added to cart", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "${this.viewModel.menu?.name} added to cart", Toast.LENGTH_SHORT).show()
                     finish()
                 }
             )
