@@ -29,6 +29,4 @@ fun CartMenuRelation.toCartMenu() = CartMenu(
     menu = this.menu.toMenu()
 )
 
-fun List<CartMenuRelation?>.toCartMenuList() = this.map {
-    it?.toCartMenu()
-}
+fun List<CartMenuRelation>.toCartMenuList() = this.map {it.toCartMenu()}
