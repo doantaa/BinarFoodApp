@@ -20,6 +20,7 @@ import com.binar.binarfoodapp.presentation.cart.adapter.CartListener
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.hideKeyboard
 import com.binar.binarfoodapp.utils.proceedWhen
+import com.binar.binarfoodapp.utils.toCurrencyFormat
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 
 
@@ -81,6 +82,7 @@ class CartFragment : Fragment() {
                 binding.rvCartList.isVisible = true
                 result.payload?.let { (carts, totalPrice) ->
                     adapter.setData(carts)
+                    binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
                 }
             }, doOnLoading = {
                 binding.layoutState.root.isVisible = true
@@ -99,7 +101,7 @@ class CartFragment : Fragment() {
                 binding.layoutState.tvError.isVisible = true
                 binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
                 data.payload?.let { (_, totalPrice) ->
-//                    binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
+                    binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
                 }
                 binding.rvCartList.isVisible = false
             })
