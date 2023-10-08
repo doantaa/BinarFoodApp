@@ -49,6 +49,7 @@
                 tools:text="Ayam Goreng" />
 
             <ImageView
+                android:id="@+id/btn_remove"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="9dp"
@@ -109,7 +110,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <EditText
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_order_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

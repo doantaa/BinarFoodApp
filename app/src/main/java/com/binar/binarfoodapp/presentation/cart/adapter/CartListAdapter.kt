@@ -8,27 +8,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartBinding
 import com.binar.binarfoodapp.model.Cart
-import com.binar.binarfoodapp.model.Menu
+import com.binar.binarfoodapp.model.CartMenu
+import com.binar.binarfoodapp.presentation.cart.adapter.viewholder.CartItemListViewHolder
+import com.binar.binarfoodapp.presentation.cart.adapter.viewholder.CartOrderViewHolder
 
-class CartListAdapter(
-    private val cartListener: CartListener? = null
-):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CartListAdapter(private val cartListener: CartListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Menu>(){
-        override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
-            return oldItem.id == newItem.id
+    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<CartMenu>() {
+
+        override fun areItemsTheSame(oldItem: CartMenu, newItem: CartMenu): Boolean {
+            return oldItem.cart.id == newItem.cart.id
         }
 
-        override fun areContentsTheSame(oldItem: Menu, newItem: Menu): Boolean {
+        override fun areContentsTheSame(oldItem: CartMenu, newItem: CartMenu): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
     })
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CartItemListViewHolder(binding = ItemCartBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        ))
+        return if (cartListener != null) CartItemListViewHolder(
+            ItemCartBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), cartListener
+        ) else CartOrderViewHolder(
+            ItemCartBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -36,13 +44,14 @@ class CartListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolderBinder<Menu>).bind(differ.currentList[position])
+        (holder as ViewHolderBinder<CartMenu>).bind(differ.currentList[position])
     }
 
-    fun setData(menuData:List<Menu>){
+    fun setData(menuData: List<CartMenu>) {
         differ.submitList(menuData)
     }
 }
+
 
 interface CartListener {
     fun onPlusTotalItemCartClicked(cart: Cart)
