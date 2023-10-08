@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.binar.binarfoodapp.data.local.database.entity.CartEntity
+import com.binar.binarfoodapp.data.local.database.relation.CartMenuRelation
+import com.binar.binarfoodapp.model.CartMenu
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,7 +20,7 @@ interface CartDao {
     suspend fun insertCarts(carts: List<CartEntity>)
 
     @Query("SELECT * FROM CART")
-    fun getAllCarts(): Flow<List<CartEntity>>
+    fun getAllCarts(): Flow<List<CartMenuRelation>>
 
     @Query("SELECT * FROM CART WHERE id == :cartId")
     fun getCartById(cartId: Int): Flow<CartEntity>

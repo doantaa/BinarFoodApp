@@ -6,9 +6,9 @@ import com.binar.binarfoodapp.data.local.database.relation.CartMenuRelation
 import kotlinx.coroutines.flow.Flow
 
 interface CartDataSource {
-    suspend fun insertCart(cart: CartEntity)
+    suspend fun insertCart(cart: CartEntity) : Long
     suspend fun insertCarts(carts: List<CartEntity>)
-    fun getAllCarts(): Flow<List<CartEntity>>
+    fun getAllCarts(): Flow<List<CartMenuRelation>>
     fun getCartById(cartId: Int): Flow<CartEntity>
     suspend fun updateCart(cart: CartEntity): Int
     suspend fun deleteCart(cart: CartEntity): Int
@@ -17,15 +17,15 @@ interface CartDataSource {
 class CartDataSourceImpl(
     private val dao: CartDao
 ) : CartDataSource {
-    override suspend fun insertCart(cart: CartEntity) {
-        dao.insertCart(cart)
+    override suspend fun insertCart(cart: CartEntity): Long {
+        return dao.insertCart(cart)
     }
 
     override suspend fun insertCarts(carts: List<CartEntity>) {
         dao.insertCarts(carts)
     }
 
-    override fun getAllCarts(): Flow<List<CartEntity>> {
+    override fun getAllCarts(): Flow<List<CartMenuRelation>> {
         return dao.getAllCarts()
     }
 
