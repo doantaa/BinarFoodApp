@@ -9,13 +9,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.data.dummy.DummyCategoryDataSource
 import com.binar.binarfoodapp.data.dummy.DummyCategoryDataSourceImpl
 import com.binar.binarfoodapp.data.local.database.AppDatabase
 import com.binar.binarfoodapp.data.local.database.datasource.MenuDataSourceImpl
+import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSourceImpl
+import com.binar.binarfoodapp.data.local.datastore.appDataStore
 import com.binar.binarfoodapp.data.repository.MenuRepository
 import com.binar.binarfoodapp.data.repository.MenuRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
@@ -25,6 +26,7 @@ import com.binar.binarfoodapp.presentation.home.adapter.subadapter.AdapterLayout
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.CategoryListAdapter
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.FoodListAdapter
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
+import com.binar.binarfoodapp.utils.PreferenceDataStoreHelperImpl
 import com.binar.binarfoodapp.utils.proceedWhen
 
 class HomeFragment : Fragment() {
@@ -32,14 +34,16 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by viewModels {
-        val categoryDataSource = DummyCategoryDataSourceImpl()
-        val database= AppDatabase.getInstance(requireContext())
+        val database = AppDatabase.getInstance(requireContext())
         val menuDao = database.menuDao()
         val menuDataSource = MenuDataSourceImpl(menuDao)
-        val repo: MenuRepository = MenuRepositoryImpl(menuDataSource,categoryDataSource)
-        GenericViewModelFactory.create(HomeViewModel(repo))
-    }
+        val repo: MenuRepository = MenuRepositoryImpl(menuDataSource, categoryDataSource)
 
+        val dataStore = this.requireContext().appDataStore
+        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
+        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
+        GenericViewModelFactory.create(HomeViewModel(repo, userPreferenceDataSource))
+    }
 
 
     private val categoryDataSource: DummyCategoryDataSource by lazy {
@@ -78,35 +82,43 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         fetchData()
         setupSwitch()
-
     }
 
     private fun fetchData() {
-        viewModel.menuData.observe(viewLifecycleOwner){
+        viewModel.menuData.observe(viewLifecycleOwner) {
             it.proceedWhen(
-                doOnSuccess = {result ->
+                doOnSuccess = { result ->
                     binding.rvFoods.isVisible = true
-                    result.payload?.let {menu ->
+                    binding.layoutState.tvError.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
+                    result.payload?.let { menu ->
                         foodListAdapter.setData(menu)
                     }
-                    binding.tvListTitle.text = "Success"
                 },
                 doOnLoading = {
-                    binding.tvListTitle.text = ("Loading")
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.rvFoods.isVisible = false
+
+                },
+                doOnError = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = it.exception?.message.orEmpty()
+                    binding.rvFoods.isVisible = false
                 }
             )
         }
     }
 
     private fun setupSwitch() {
-        binding.ivSwitchLayout.setOnClickListener {
-            val isGridView = foodListAdapter.adapterLayoutMode == AdapterLayoutMode.GRID
-            val icon = if (isGridView) R.drawable.ic_grid else R.drawable.ic_linear
-
+        viewModel.getUserListViewLiveData().observe(viewLifecycleOwner) { isUsingList ->
+            val icon = if (isUsingList) R.drawable.ic_linear else R.drawable.ic_grid
             (binding.rvFoods.layoutManager as GridLayoutManager).spanCount =
-                if (isGridView) 1 else 2
+                if (isUsingList) 1 else 2
             foodListAdapter.adapterLayoutMode =
-                if (isGridView) AdapterLayoutMode.LINEAR else AdapterLayoutMode.GRID
+                if (isUsingList) AdapterLayoutMode.LINEAR else AdapterLayoutMode.GRID
             binding.ivSwitchLayout.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
@@ -114,6 +126,18 @@ class HomeFragment : Fragment() {
                 )
             )
             foodListAdapter.refreshList()
+            Toast.makeText(requireContext(), isUsingList.toString(), Toast.LENGTH_SHORT).show()
+            setSwitchClickListener(isUsingList)
+        }
+    }
+
+    private fun setSwitchClickListener(usingList: Boolean) {
+        binding.ivSwitchLayout.setOnClickListener {
+            if (usingList) {
+                viewModel.setUserListViewMode(false)
+            } else {
+                viewModel.setUserListViewMode(true)
+            }
         }
     }
 
