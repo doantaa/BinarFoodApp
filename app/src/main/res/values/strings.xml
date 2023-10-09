@@ -14,9 +14,22 @@
     <string name="text_location_detail" translatable="false">Jl. BSD Green Office Park Jl. BSD Grand Boulevard, Sampora, BSD, Kabupaten Tangerang, Banten 15345</string>
     <string name="text_add_to_cart">Tambah ke keranjang</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="text_home">Home</string>
     <string name="text_cart">Cart</string>
     <string name="text_profile">Profile</string>
     <string name="text_cart_is_empty">Cart is Empty</string>
+    <string name="text_note">Note:</string>
+    <string name="total_quantity" translatable="false">x%d</string>
+    <string name="text_total_price">Total Price</string>
+    <string name="text_order_confirmation">Order Confirmation</string>
+    <string name="text_checkout" translatable="false">Checkout</string>
+    <string name="text_delivery_method">Delivery Method</string>
+    <string name="text_pick_up">Pick Up</string>
+    <string name="text_delivery">Delivery</string>
+    <string name="text_payment_method_title">Payment method</string>
+    <string name="text_payment_method_cash" translatable="false">Cash</string>
+    <string name="text_payment_method_ewallet" translatable="false">E-wallet</string>
+    <string name="text_order_summary_title">Order Summary</string>
+    <string name="text_menu_image_desc" translatable="false">menu image</string>
 </resources>

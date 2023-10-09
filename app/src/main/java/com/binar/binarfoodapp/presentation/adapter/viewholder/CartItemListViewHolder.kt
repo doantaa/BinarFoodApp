@@ -1,11 +1,11 @@
-package com.binar.binarfoodapp.presentation.cart.adapter.viewholder
+package com.binar.binarfoodapp.presentation.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartBinding
 import com.binar.binarfoodapp.model.CartMenu
-import com.binar.binarfoodapp.presentation.cart.adapter.CartListener
+import com.binar.binarfoodapp.presentation.adapter.CartListener
 import com.binar.binarfoodapp.utils.doneEditing
 import com.binar.binarfoodapp.utils.toCurrencyFormat
 

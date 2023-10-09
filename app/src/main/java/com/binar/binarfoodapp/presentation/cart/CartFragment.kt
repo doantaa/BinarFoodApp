@@ -16,15 +16,13 @@ import com.binar.binarfoodapp.data.local.database.datasource.CartDataSourceImpl
 import com.binar.binarfoodapp.data.repository.CartRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentCartBinding
 import com.binar.binarfoodapp.model.Cart
-import com.binar.binarfoodapp.presentation.cart.adapter.CartListAdapter
-import com.binar.binarfoodapp.presentation.cart.adapter.CartListener
+import com.binar.binarfoodapp.presentation.adapter.CartListAdapter
+import com.binar.binarfoodapp.presentation.adapter.CartListener
 import com.binar.binarfoodapp.presentation.checkout.CheckoutActivity
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.hideKeyboard
 import com.binar.binarfoodapp.utils.proceedWhen
 import com.binar.binarfoodapp.utils.toCurrencyFormat
-import com.google.android.material.internal.ViewUtils.hideKeyboard
-
 
 class CartFragment : Fragment() {
 

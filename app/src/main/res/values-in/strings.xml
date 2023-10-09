@@ -12,4 +12,16 @@
     <string name="text_menu_heading">List menu makanan</string>
     <string name="text_location_title">Location</string>
     <string name="text_add_to_cart">Add to cart</string>
+    <string name="text_home">Beranda</string>
+    <string name="text_cart">Keranjang</string>
+    <string name="text_profile">Profil</string>
+    <string name="text_cart_is_empty">Keranjang kosong</string>
+    <string name="text_note">Catatan:</string>
+    <string name="text_total_price">Total Harga</string>
+    <string name="text_order_confirmation">Konfirmasi Pemesanan</string>
+    <string name="text_delivery_method">Metode Pengiriman</string>
+    <string name="text_pick_up">Ambil</string>
+    <string name="text_delivery">Diantar</string>
+    <string name="text_payment_method_title">Metode Pembayaran</string>
+    <string name="text_order_summary_title">Ringkasan Pemesanan</string>
 </resources>
