@@ -1,4 +1,4 @@
-package com.binar.binarfoodapp.presentation.cart.adapter
+package com.binar.binarfoodapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,12 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartBinding
+import com.binar.binarfoodapp.databinding.ItemCartCheckoutBinding
 import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.model.CartMenu
-import com.binar.binarfoodapp.presentation.cart.adapter.viewholder.CartItemListViewHolder
-import com.binar.binarfoodapp.presentation.cart.adapter.viewholder.CartOrderViewHolder
+import com.binar.binarfoodapp.presentation.adapter.viewholder.CartItemListViewHolder
+import com.binar.binarfoodapp.presentation.adapter.viewholder.CheckoutListViewHolder
 
-class CartListAdapter(private val cartListener: CartListener) :
+class CartListAdapter(private val cartListener: CartListener? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<CartMenu>() {
@@ -32,11 +33,14 @@ class CartListAdapter(private val cartListener: CartListener) :
             ItemCartBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), cartListener
-        ) else CartOrderViewHolder(
-            ItemCartBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+        ) else {
+            CheckoutListViewHolder(
+                ItemCartCheckoutBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
             )
-        )
+        }
+
     }
 
     override fun getItemCount(): Int {
