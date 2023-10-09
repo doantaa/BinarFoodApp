@@ -1,6 +1,7 @@
 package com.binar.binarfoodapp.presentation.checkout
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -50,6 +51,11 @@ class CheckoutActivity : AppCompatActivity() {
     private fun setClickListener() {
         binding.ivBack.setOnClickListener{
             onBackPressed()
+        }
+
+        binding.btnCheckout.setOnClickListener{
+            Toast.makeText(this, "Pesanan anda berhasil", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
