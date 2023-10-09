@@ -32,4 +32,13 @@
     <string name="text_payment_method_ewallet" translatable="false">E-wallet</string>
     <string name="text_order_summary_title">Order Summary</string>
     <string name="text_menu_image_desc" translatable="false">menu image</string>
+    <string name="text_proflie">Profile</string>
+    <string name="text_name_label">Name</string>
+    <string name="text_name_value" translatable="false">Doanta Aloycius Ginting</string>
+    <string name="text_username_label" translatable="false">Username</string>
+    <string name="text_username_value" translatable="false">doantaa</string>
+    <string name="text_email_label" translatable="false">Email</string>
+    <string name="text_email_value" translatable="false">doantaaloycius@gmail.com</string>
+    <string name="text_whatsapp_label">Whatsapp Number</string>
+    <string name="text_whatsapp_value" translatable="false">0811 7053 5262</string>
 </resources>
