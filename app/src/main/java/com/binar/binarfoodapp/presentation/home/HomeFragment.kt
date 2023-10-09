@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -82,6 +81,7 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         fetchData()
         setupSwitch()
+
     }
 
     private fun fetchData() {
@@ -94,6 +94,7 @@ class HomeFragment : Fragment() {
                     result.payload?.let { menu ->
                         foodListAdapter.setData(menu)
                     }
+                    binding.tvListTitle.text = "Success"
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
@@ -126,7 +127,6 @@ class HomeFragment : Fragment() {
                 )
             )
             foodListAdapter.refreshList()
-            Toast.makeText(requireContext(), isUsingList.toString(), Toast.LENGTH_SHORT).show()
             setSwitchClickListener(isUsingList)
         }
     }
