@@ -11,10 +11,10 @@
         android:id="@+id/iv_header_background"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:outlineAmbientShadowColor="@color/black"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_header"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="Keranjang"
+        android:text="@string/text_keranjang"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,14 +32,14 @@
         android:id="@+id/rv_cart_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cv_section_checkout"
         app:layout_constraintTop_toBottomOf="@id/iv_header_background"
         tools:listitem="@layout/item_cart" />
 
     <include
         android:id="@+id/layout_state"
-        app:layout_constraintTop_toBottomOf="@id/iv_header_background"
-        layout="@layout/common_layout_content_state"/>
+        layout="@layout/common_layout_content_state"
+        app:layout_constraintTop_toBottomOf="@id/iv_header_background" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_section_checkout"
@@ -60,7 +60,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="Total price"
+                android:text="@string/text_total_price"
                 android:textColor="@color/primary"
                 app:layout_constraintEnd_toStartOf="@id/btn_checkout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                 android:id="@+id/btn_checkout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Checkout"
+                android:text="@string/text_checkout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
