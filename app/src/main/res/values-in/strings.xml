@@ -24,4 +24,7 @@
     <string name="text_delivery">Diantar</string>
     <string name="text_payment_method_title">Metode Pembayaran</string>
     <string name="text_order_summary_title">Ringkasan Pemesanan</string>
+    <string name="text_proflie">Profil</string>
+    <string name="text_name_label">Nama</string>
+    <string name="text_whatsapp_label">Nomor Whatsapp</string>
 </resources>
