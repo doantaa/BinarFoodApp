@@ -94,7 +94,6 @@ class HomeFragment : Fragment() {
                     result.payload?.let { menu ->
                         foodListAdapter.setData(menu)
                     }
-                    binding.tvListTitle.text = "Success"
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
