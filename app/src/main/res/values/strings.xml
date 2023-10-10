@@ -41,4 +41,5 @@
     <string name="text_email_value" translatable="false">doantaaloycius@gmail.com</string>
     <string name="text_whatsapp_label">Whatsapp Number</string>
     <string name="text_whatsapp_value" translatable="false">0811 7053 5262</string>
+    <string name="text_keranjang">Keranjang</string>
 </resources>
