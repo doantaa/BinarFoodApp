@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface MenuRepository {
     fun getCategories(): Flow<ResultWrapper<List<Category>>>
-    fun getMenus(): Flow<ResultWrapper<List<Menu>>>
+    fun getMenus(category: String? = null): Flow<ResultWrapper<List<Menu>>>
 }
 
 class MenuRepositoryImpl(
@@ -23,9 +23,9 @@ class MenuRepositoryImpl(
         }
     }
 
-    override fun getMenus(): Flow<ResultWrapper<List<Menu>>> {
+    override fun getMenus(category: String?): Flow<ResultWrapper<List<Menu>>> {
         return proceedFlow {
-            apiDataSource.getMenus().data?.toMenuList() ?: emptyList()
+            apiDataSource.getMenus(category).data?.toMenuList() ?: emptyList()
         }
     }
 

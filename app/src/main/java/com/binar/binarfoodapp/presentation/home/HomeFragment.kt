@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -41,12 +42,6 @@ class HomeFragment : Fragment() {
         GenericViewModelFactory.create(HomeViewModel(repository, userPreferenceDataSource))
     }
 
-
-//    private val categoryDataSource: DummyCategoryDataSource by lazy {
-//        DummyCategoryDataSourceImpl()
-//    }
-
-
     private val foodListAdapter: FoodListAdapter by lazy {
         FoodListAdapter(
             adapterLayoutMode = AdapterLayoutMode.GRID,
@@ -55,9 +50,10 @@ class HomeFragment : Fragment() {
     }
 
     private val categoryListAdapter: CategoryListAdapter by lazy {
-        CategoryListAdapter(
-            onItemClick = {}
-        )
+        CategoryListAdapter {
+            viewModel.getMenus(it.name.lowercase())
+            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+        }
 
     }
 

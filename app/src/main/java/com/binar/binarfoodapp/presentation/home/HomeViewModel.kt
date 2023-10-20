@@ -26,16 +26,16 @@ class HomeViewModel(
     val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 
-    fun getMenus() {
-        viewModelScope.launch {
-            repo.getMenus().collect() { result ->
+    fun getMenus(category : String? = null) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.getMenus(category).collect() { result ->
                 _menus.postValue(result)
             }
         }
     }
 
     fun getCategories() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repo.getCategories().collect() { result ->
                 _categories.postValue(result)
             }

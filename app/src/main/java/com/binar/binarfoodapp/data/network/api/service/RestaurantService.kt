@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 interface RestaurantService {
     @GET("listmenu")
-    suspend fun getMenus(@Query("category") category: String? = null): MenusResponse
+    suspend fun getMenus(@Query("c") category: String? = null): MenusResponse
 
     @GET("category")
     suspend fun getCategories() : CategoriesResponse

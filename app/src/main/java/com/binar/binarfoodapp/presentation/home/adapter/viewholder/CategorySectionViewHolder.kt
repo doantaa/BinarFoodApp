@@ -8,10 +8,13 @@ import com.binar.binarfoodapp.model.Category
 
 class CategorySectionViewHolder(
     private val binding: ItemCategoryBinding,
-    onItemClick: (Category) -> Unit
+    val onItemClick: (Category) -> Unit
 ): RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Category> {
     override fun bind(item: Category) {
-        binding.ivCategoryImage.load(item.imageUrl)
-        binding.tvCategoryName.text = item.name
+        with(item){
+            binding.ivCategoryImage.load(item.imageUrl)
+            binding.tvCategoryName.text = item.name
+            itemView.setOnClickListener { onItemClick(this) }
+        }
     }
 }
