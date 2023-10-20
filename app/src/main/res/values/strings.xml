@@ -58,4 +58,11 @@
     <string name="text_label_confirm_password">Confirm Password</string>
     <string name="text_clickable_to_register">Register here</string>
     <string name="text_clickable_to_login">Login here</string>
+    <string name="text_logout">Logout</string>
+    <string name="text_logout_confirmation">Do you want to logout?</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="text_back">Back</string>
+    <string name="text_save">Save</string>
+    <string name="text_edit" translatable="false">Edit</string>
 </resources>
