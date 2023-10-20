@@ -14,7 +14,9 @@ import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSourceImpl
 import com.binar.binarfoodapp.data.local.datastore.appDataStore
 import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
 import com.binar.binarfoodapp.data.network.api.service.RestaurantService
+import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.binar.binarfoodapp.data.repository.MenuRepositoryImpl
+import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.presentation.detail.DetailActivity
@@ -24,6 +26,7 @@ import com.binar.binarfoodapp.presentation.home.adapter.subadapter.FoodListAdapt
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.PreferenceDataStoreHelperImpl
 import com.binar.binarfoodapp.utils.proceedWhen
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
@@ -37,7 +40,16 @@ class HomeFragment : Fragment() {
         val dataStore = this.requireContext().appDataStore
         val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
         val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-        GenericViewModelFactory.create(HomeViewModel(repository, userPreferenceDataSource))
+
+        val firebaseDataSource = FirebaseAuthDataSourceImpl(FirebaseAuth.getInstance())
+        val userRepository = UserRepositoryImpl(firebaseDataSource)
+        GenericViewModelFactory.create(
+            HomeViewModel(
+                repository,
+                userPreferenceDataSource,
+                userRepository
+            )
+        )
     }
 
     private val foodListAdapter: FoodListAdapter by lazy {
@@ -72,7 +84,13 @@ class HomeFragment : Fragment() {
         invokeData()
         observeData()
         setupSwitch()
+        setProfileData()
 
+    }
+
+    private fun setProfileData() {
+        val name = viewModel.getUserData()?.fullName ?: "Binarian"
+        binding.tvHeaderUserName.text = getString(R.string.text_greeting_user_name, name)
     }
 
     private fun invokeData() {
@@ -81,32 +99,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.menus.observe(viewLifecycleOwner) {
-            it.proceedWhen(
-                doOnSuccess = { result ->
-                    binding.rvFoods.isVisible = true
-                    binding.layoutState.tvError.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
-                    result.payload?.let { menu ->
-                        foodListAdapter.setData(menu)
-                    }
-                },
-                doOnLoading = {
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
-                    binding.rvFoods.isVisible = false
+        observeCategory()
+        observeMenu()
+    }
 
-                },
-                doOnError = {
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
-                    binding.layoutState.tvError.isVisible = true
-                    binding.layoutState.tvError.text = it.exception?.message.orEmpty()
-                    binding.rvFoods.isVisible = false
-                }
-            )
-        }
-
+    private fun observeCategory() {
         viewModel.categories.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
@@ -129,6 +126,34 @@ class HomeFragment : Fragment() {
                     binding.categoryLayoutState.tvError.isVisible = true
                     binding.categoryLayoutState.tvError.text = it.exception?.message.orEmpty()
                     binding.rvCategory.isVisible = false
+                }
+            )
+        }
+    }
+
+    private fun observeMenu() {
+        viewModel.menus.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = { result ->
+                    binding.rvFoods.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
+                    result.payload?.let { menu ->
+                        foodListAdapter.setData(menu)
+                    }
+                },
+                doOnLoading = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.rvFoods.isVisible = false
+
+                },
+                doOnError = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = it.exception?.message.orEmpty()
+                    binding.rvFoods.isVisible = false
                 }
             )
         }
@@ -175,7 +200,6 @@ class HomeFragment : Fragment() {
 
     private fun setupCategoryRecyclerView() {
         binding.rvCategory.adapter = categoryListAdapter
-//        categoryListAdapter.setData(categoryDataSource.getCategory())
 
     }
 
