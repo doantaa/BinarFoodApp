@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "839140795985",
+    "project_id": "binar-food-app",
+    "storage_bucket": "binar-food-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839140795985:android:3d9a0c251b134cc898fa70",
+        "android_client_info": {
+          "package_name": "com.binar.binarfoodapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ-UPQW5FbfJ_F4zx0972If02-C36SGuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,8 +11,7 @@ import com.binar.binarfoodapp.utils.ResultWrapper
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
-    private val extras: Bundle?,
-    private val cartRepository: CartRepository
+    private val extras: Bundle?, private val cartRepository: CartRepository
 ) : ViewModel() {
     val menu = extras?.getParcelable<Menu>(DetailActivity.EXTRA_FOOD)
 
@@ -21,7 +20,7 @@ class DetailViewModel(
     }
 
     val menuCountLiveData = MutableLiveData<Int>().apply {
-        postValue(1)
+        postValue(0)
     }
 
     private val _addToCartResult = MutableLiveData<ResultWrapper<Boolean>>()
@@ -47,9 +46,11 @@ class DetailViewModel(
     }
 
     fun addToCart() {
+
         viewModelScope.launch {
             val quantity =
                 if ((menuCountLiveData.value ?: 0) <= 0) 1 else menuCountLiveData.value ?: 0
+
             menu?.let {
                 cartRepository.createCart(it, quantity).collect {
                     _addToCartResult.postValue(it)

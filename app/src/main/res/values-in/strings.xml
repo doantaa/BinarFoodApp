@@ -27,4 +27,20 @@
     <string name="text_proflie">Profil</string>
     <string name="text_name_label">Nama</string>
     <string name="text_whatsapp_label">Nomor Whatsapp</string>
+    <string name="text_keranjang">Cart</string>
+    <string name="text_hint_email_empty">Email tidak boleh kosong</string>
+    <string name="text_hint_password_empty">Password tidak boleh kosong</string>
+    <string name="text_hint_email_format_invalid">Format email salah</string>
+    <string name="text_hint_name_empty">Nama tidak boleh kosong</string>
+    <string name="text_hint_password_length">Password tidak boleh kurang dari 8 karakter</string>
+    <string name="text_hint_password_not_match">Password tidak cocok</string>
+    <string name="text_helper_to_register">Belum Punya akun? Daftar disini</string>
+    <string name="text_register">Daftar</string>
+    <string name="text_helper_to_login">Sudah punya akun? Login disini</string>
+    <string name="text_label_full_name">Nama Lengkap</string>
+    <string name="text_label_email_address">Alamat Email</string>
+    <string name="text_label_password">Password</string>
+    <string name="text_label_confirm_password">Konfirmasi Password</string>
+    <string name="text_clickable_to_register">Daftar disini</string>
+    <string name="text_clickable_to_login">Login disini</string>
 </resources>

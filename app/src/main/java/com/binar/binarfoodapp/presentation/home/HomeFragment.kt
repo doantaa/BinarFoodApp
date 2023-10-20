@@ -1,22 +1,21 @@
 package com.binar.binarfoodapp.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.dummy.DummyCategoryDataSource
-import com.binar.binarfoodapp.data.dummy.DummyCategoryDataSourceImpl
-import com.binar.binarfoodapp.data.local.database.AppDatabase
-import com.binar.binarfoodapp.data.local.database.datasource.MenuDataSourceImpl
 import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSourceImpl
 import com.binar.binarfoodapp.data.local.datastore.appDataStore
-import com.binar.binarfoodapp.data.repository.MenuRepository
+import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
+import com.binar.binarfoodapp.data.network.api.service.RestaurantService
 import com.binar.binarfoodapp.data.repository.MenuRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
 import com.binar.binarfoodapp.model.Menu
@@ -33,22 +32,15 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val menuDao = database.menuDao()
-        val menuDataSource = MenuDataSourceImpl(menuDao)
-        val repo: MenuRepository = MenuRepositoryImpl(menuDataSource, categoryDataSource)
+        val service = RestaurantService.invoke()
+        val dataSource = RestaurantApiDataSource(service)
+        val repository = MenuRepositoryImpl(dataSource)
 
         val dataStore = this.requireContext().appDataStore
         val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
         val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-        GenericViewModelFactory.create(HomeViewModel(repo, userPreferenceDataSource))
+        GenericViewModelFactory.create(HomeViewModel(repository, userPreferenceDataSource))
     }
-
-
-    private val categoryDataSource: DummyCategoryDataSource by lazy {
-        DummyCategoryDataSourceImpl()
-    }
-
 
     private val foodListAdapter: FoodListAdapter by lazy {
         FoodListAdapter(
@@ -58,9 +50,10 @@ class HomeFragment : Fragment() {
     }
 
     private val categoryListAdapter: CategoryListAdapter by lazy {
-        CategoryListAdapter(
-            onItemClick = {}
-        )
+        CategoryListAdapter {
+            viewModel.getMenus(it.name.lowercase())
+            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+        }
 
     }
 
@@ -71,7 +64,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -79,13 +72,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        fetchData()
+        invokeData()
+        observeData()
         setupSwitch()
 
     }
 
-    private fun fetchData() {
-        viewModel.menuData.observe(viewLifecycleOwner) {
+    private fun invokeData() {
+        viewModel.getCategories()
+        viewModel.getMenus()
+    }
+
+    private fun observeData() {
+        viewModel.menus.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
                     binding.rvFoods.isVisible = true
@@ -107,6 +106,33 @@ class HomeFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = it.exception?.message.orEmpty()
                     binding.rvFoods.isVisible = false
+                }
+            )
+        }
+
+        viewModel.categories.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = { result ->
+                    binding.rvCategory.isVisible = true
+                    binding.categoryLayoutState.tvError.isVisible = false
+                    binding.categoryLayoutState.pbLoading.isVisible = false
+                    Log.e("JDAR", "Aw you found me!")
+
+                    result.payload?.let { category ->
+                        categoryListAdapter.setData(category)
+                    }
+                },
+                doOnLoading = {
+                    binding.categoryLayoutState.root.isVisible = true
+                    binding.categoryLayoutState.pbLoading.isVisible = true
+                    binding.rvCategory.isVisible = false
+                },
+                doOnError = {
+                    binding.categoryLayoutState.root.isVisible = true
+                    binding.categoryLayoutState.pbLoading.isVisible = false
+                    binding.categoryLayoutState.tvError.isVisible = true
+                    binding.categoryLayoutState.tvError.text = it.exception?.message.orEmpty()
+                    binding.rvCategory.isVisible = false
                 }
             )
         }
@@ -153,7 +179,7 @@ class HomeFragment : Fragment() {
 
     private fun setupCategoryRecyclerView() {
         binding.rvCategory.adapter = categoryListAdapter
-        categoryListAdapter.setData(categoryDataSource.getCategory())
+//        categoryListAdapter.setData(categoryDataSource.getCategory())
 
     }
 

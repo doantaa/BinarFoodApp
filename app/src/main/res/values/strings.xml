@@ -41,4 +41,21 @@
     <string name="text_email_value" translatable="false">doantaaloycius@gmail.com</string>
     <string name="text_whatsapp_label">Whatsapp Number</string>
     <string name="text_whatsapp_value" translatable="false">0811 7053 5262</string>
+    <string name="text_keranjang">Keranjang</string>
+    <string name="text_hint_email_empty">Email shouldn\'t be empty</string>
+    <string name="text_hint_password_empty">Password field should\'t be empty</string>
+    <string name="text_hint_email_format_invalid">Your email format is invalid</string>
+    <string name="text_hint_name_empty">Name Field should not be empty</string>
+    <string name="text_hint_password_length">Password cannot less than 8 character</string>
+    <string name="text_hint_password_not_match">Password doesn\'t match</string>
+    <string name="text_login" translatable="false">Login</string>
+    <string name="text_helper_to_register">Not registered yet? Register here</string>
+    <string name="text_register">Register</string>
+    <string name="text_helper_to_login">Have an account? Login here</string>
+    <string name="text_label_full_name">Full Name</string>
+    <string name="text_label_email_address">Email Address</string>
+    <string name="text_label_password">Password</string>
+    <string name="text_label_confirm_password">Confirm Password</string>
+    <string name="text_clickable_to_register">Register here</string>
+    <string name="text_clickable_to_login">Login here</string>
 </resources>

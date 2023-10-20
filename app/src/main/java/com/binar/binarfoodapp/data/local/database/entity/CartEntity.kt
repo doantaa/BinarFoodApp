@@ -12,6 +12,15 @@ data class CartEntity (
     @ColumnInfo("menu_id")
     var menuId : Int = 0,
 
+    @ColumnInfo("menu_name")
+    val menuName: String,
+
+    @ColumnInfo("menu_price")
+    val menuPrice: Int,
+
+    @ColumnInfo("menu_img_url")
+    val menuImgUrl: String,
+
     @ColumnInfo(name = "item_quantity")
     var itemQuantity: Int = 0,
 
