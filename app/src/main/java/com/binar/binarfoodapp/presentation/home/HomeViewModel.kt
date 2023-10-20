@@ -1,6 +1,5 @@
 package com.binar.binarfoodapp.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +15,8 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val repo: MenuRepository,
-    private val userPreferenceDataSource: UserPreferenceDataSource
+    private val userPreferenceDataSource: UserPreferenceDataSource,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _menus = MutableLiveData<ResultWrapper<List<Menu>>>()
@@ -27,10 +27,9 @@ class HomeViewModel(
     val categories: LiveData<ResultWrapper<List<Category>>>
         get() = _categories
 
-    fun getMenus(category : String? = null) {
+    fun getMenus(category: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.getMenus(if(category == "all") null else category).collect() { result ->
-                Log.e("JAHAHAHA", category.toString())
                 _menus.postValue(result)
             }
         }
@@ -54,4 +53,6 @@ class HomeViewModel(
     fun getUserListViewLiveData() = userPreferenceDataSource
         .getUserListViewModePrefFlow()
         .asLiveData(Dispatchers.IO)
+
+    fun getUserData() = userRepository.getCurrentUser()
 }

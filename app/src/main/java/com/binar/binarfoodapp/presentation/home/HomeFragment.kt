@@ -1,9 +1,11 @@
 package com.binar.binarfoodapp.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -37,7 +39,16 @@ class HomeFragment : Fragment() {
         val dataStore = this.requireContext().appDataStore
         val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
         val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-        GenericViewModelFactory.create(HomeViewModel(repository, userPreferenceDataSource))
+
+        val firebaseDataSource = FirebaseAuthDataSourceImpl(FirebaseAuth.getInstance())
+        val userRepository = UserRepositoryImpl(firebaseDataSource)
+        GenericViewModelFactory.create(
+            HomeViewModel(
+                repository,
+                userPreferenceDataSource,
+                userRepository
+            )
+        )
     }
 
     private val foodListAdapter: FoodListAdapter by lazy {
@@ -72,7 +83,13 @@ class HomeFragment : Fragment() {
         invokeData()
         observeData()
         setupSwitch()
+        setProfileData()
 
+    }
+
+    private fun setProfileData() {
+        val name = viewModel.getUserData()?.fullName ?: "Binarian"
+        binding.tvHeaderUserName.text = getString(R.string.text_greeting_name, name)
     }
 
     private fun invokeData() {
@@ -81,32 +98,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.menus.observe(viewLifecycleOwner) {
-            it.proceedWhen(
-                doOnSuccess = { result ->
-                    binding.rvFoods.isVisible = true
-                    binding.layoutState.tvError.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
-                    result.payload?.let { menu ->
-                        foodListAdapter.setData(menu)
-                    }
-                },
-                doOnLoading = {
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
-                    binding.rvFoods.isVisible = false
+        observeCategory()
+        observeMenu()
+    }
 
-                },
-                doOnError = {
-                    binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
-                    binding.layoutState.tvError.isVisible = true
-                    binding.layoutState.tvError.text = it.exception?.message.orEmpty()
-                    binding.rvFoods.isVisible = false
-                }
-            )
-        }
-
+    private fun observeCategory() {
         viewModel.categories.observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = { result ->
@@ -129,6 +125,34 @@ class HomeFragment : Fragment() {
                     binding.categoryLayoutState.tvError.isVisible = true
                     binding.categoryLayoutState.tvError.text = it.exception?.message.orEmpty()
                     binding.rvCategory.isVisible = false
+                }
+            )
+        }
+    }
+
+    private fun observeMenu() {
+        viewModel.menus.observe(viewLifecycleOwner) {
+            it.proceedWhen(
+                doOnSuccess = { result ->
+                    binding.rvFoods.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                    binding.layoutState.pbLoading.isVisible = false
+                    result.payload?.let { menu ->
+                        foodListAdapter.setData(menu)
+                    }
+                },
+                doOnLoading = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.rvFoods.isVisible = false
+
+                },
+                doOnError = {
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = it.exception?.message.orEmpty()
+                    binding.rvFoods.isVisible = false
                 }
             )
         }
@@ -175,7 +199,6 @@ class HomeFragment : Fragment() {
 
     private fun setupCategoryRecyclerView() {
         binding.rvCategory.adapter = categoryListAdapter
-//        categoryListAdapter.setData(categoryDataSource.getCategory())
 
     }
 
