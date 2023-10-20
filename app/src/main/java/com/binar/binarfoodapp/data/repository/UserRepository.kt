@@ -12,6 +12,7 @@ interface UserRepository {
     fun isLoggedIn(): Boolean
     fun getCurrentUser(): User?
     fun doLogout(): Boolean
+
     suspend fun doRegister(
         fullName: String, email: String, password: String
     ): Flow<ResultWrapper<Boolean>>

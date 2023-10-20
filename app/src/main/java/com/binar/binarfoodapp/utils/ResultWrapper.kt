@@ -1,11 +1,9 @@
 package com.binar.binarfoodapp.utils
 
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlin.Exception
 
 /**
 Written with love by Muhammad Hermas Yuda Pamungkas
@@ -37,7 +35,6 @@ fun <T> ResultWrapper<T>.proceedWhen(
         is ResultWrapper.Error -> doOnError?.invoke(this)
         is ResultWrapper.Loading -> doOnLoading?.invoke(this)
         is ResultWrapper.Empty -> doOnEmpty?.invoke(this)
-        else -> {}
     }
 }
 
@@ -55,7 +52,7 @@ suspend fun <T> proceed(block: suspend () -> T): ResultWrapper<T> {
     }
 }
 
-suspend fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
+fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
     return flow<ResultWrapper<T>> {
         val result = block.invoke()
         emit(
@@ -66,7 +63,7 @@ suspend fun <T> proceedFlow(block: suspend () -> T): Flow<ResultWrapper<T>> {
             }
         )
     }.catch { e ->
-        ResultWrapper.Error<T>(exception = Exception(e))
+        emit(ResultWrapper.Error(exception = Exception(e)))
     }.onStart {
         emit(ResultWrapper.Loading())
     }
