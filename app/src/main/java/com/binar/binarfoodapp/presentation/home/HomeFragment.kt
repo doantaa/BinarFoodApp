@@ -1,11 +1,9 @@
 package com.binar.binarfoodapp.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -16,7 +14,9 @@ import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSourceImpl
 import com.binar.binarfoodapp.data.local.datastore.appDataStore
 import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
 import com.binar.binarfoodapp.data.network.api.service.RestaurantService
+import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.binar.binarfoodapp.data.repository.MenuRepositoryImpl
+import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.presentation.detail.DetailActivity
@@ -26,6 +26,7 @@ import com.binar.binarfoodapp.presentation.home.adapter.subadapter.FoodListAdapt
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.PreferenceDataStoreHelperImpl
 import com.binar.binarfoodapp.utils.proceedWhen
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
@@ -89,7 +90,7 @@ class HomeFragment : Fragment() {
 
     private fun setProfileData() {
         val name = viewModel.getUserData()?.fullName ?: "Binarian"
-        binding.tvHeaderUserName.text = getString(R.string.text_greeting_name, name)
+        binding.tvHeaderUserName.text = getString(R.string.text_greeting_user_name, name)
     }
 
     private fun invokeData() {

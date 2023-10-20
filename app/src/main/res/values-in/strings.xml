@@ -49,4 +49,5 @@
     <string name="text_no">Tidak</string>
     <string name="text_back">Kembali</string>
     <string name="text_save">Simpan</string>
+    <string name="text_greeting_user_name">Halo %1$s</string>
 </resources>

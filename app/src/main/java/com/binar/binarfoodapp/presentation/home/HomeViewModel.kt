@@ -7,6 +7,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSource
 import com.binar.binarfoodapp.data.repository.MenuRepository
+import com.binar.binarfoodapp.data.repository.UserRepository
 import com.binar.binarfoodapp.model.Category
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.utils.ResultWrapper
