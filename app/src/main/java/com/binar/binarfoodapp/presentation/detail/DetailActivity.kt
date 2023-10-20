@@ -4,13 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.binar.binarfoodapp.data.local.database.AppDatabase
 import com.binar.binarfoodapp.data.local.database.datasource.CartDataSourceImpl
+import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
+import com.binar.binarfoodapp.data.network.api.service.RestaurantService
+import com.binar.binarfoodapp.data.repository.CartRepository
 import com.binar.binarfoodapp.data.repository.CartRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityDetailBinding
 import com.binar.binarfoodapp.model.Menu
@@ -28,7 +30,12 @@ class DetailActivity : AppCompatActivity() {
         val database = AppDatabase.getInstance(this)
         val cartDao = database.cartDao()
         val cartDataSource = CartDataSourceImpl(cartDao)
-        val repo = CartRepositoryImpl(cartDataSource)
+        //API
+        val service = RestaurantService.invoke()
+        val apiDataSource = RestaurantApiDataSource(service)
+
+
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
         GenericViewModelFactory.create(DetailViewModel(intent?.extras, repo))
 
     }
@@ -53,22 +60,26 @@ class DetailActivity : AppCompatActivity() {
         viewModel.addToCartResult.observe(this) {
             it.proceedWhen(
                 doOnSuccess = {
-                    Toast.makeText(this, "${this.viewModel.menu?.name} added to cart", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "${this.viewModel.menu?.name} added to cart",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 },
                 doOnError = {
-                    Log.e("ASDF", it.toString())
+
                 }
             )
         }
     }
 
     private fun bindMenu(menu: Menu?) {
-        menu?.let { menu ->
-            binding.ivMenuImage.load(menu.imageUrl)
-            binding.tvMenuName.text = menu.name
-            binding.tvMenuPrice.text = menu.price.toCurrencyFormat()
-            binding.tvMenuDescription.text = menu.description
+        menu?.let { menuItem ->
+            binding.ivMenuImage.load(menuItem.imageUrl)
+            binding.tvMenuName.text = menuItem.name
+            binding.tvMenuPrice.text = menuItem.price.toCurrencyFormat()
+            binding.tvMenuDescription.text = menuItem.description
 
         }
 
