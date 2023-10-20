@@ -1,5 +1,6 @@
 package com.binar.binarfoodapp.data.network.firebase.auth
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -16,6 +17,10 @@ interface FirebaseAuthDataSource {
 
     @Throws(exceptionClasses = [Exception::class])
     suspend fun doLogin(email: String, password: String) : Boolean
+    suspend fun updateProfile(
+        fullName: String? = null,
+        photoUri: Uri? = null
+    ): Boolean
 }
 
 
@@ -49,6 +54,16 @@ class FirebaseAuthDataSourceImpl(private val firebaseAuth: FirebaseAuth): Fireba
     override suspend fun doLogin(email: String, password: String): Boolean {
         val loginResult = firebaseAuth.signInWithEmailAndPassword(email,password).await()
         return loginResult.user != null
+    }
+
+    override suspend fun updateProfile(fullName: String?, photoUri: Uri?): Boolean {
+        getCurrentUser()?.updateProfile(
+            userProfileChangeRequest {
+                fullName?.let { displayName = fullName }
+                photoUri?.let { this.photoUri = it }
+            }
+        )?.await()
+        return true
     }
 
 }

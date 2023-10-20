@@ -1,5 +1,6 @@
 package com.binar.binarfoodapp.data.repository
 
+import android.net.Uri
 import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSource
 import com.binar.binarfoodapp.model.User
 import com.binar.binarfoodapp.model.toUser
@@ -18,6 +19,12 @@ interface UserRepository {
     ): Flow<ResultWrapper<Boolean>>
 
     suspend fun doLogin(email: String, password: String): Flow<ResultWrapper<Boolean>>
+
+    suspend fun updateProfile(
+        fullName: String? = null,
+        photoUri: Uri? = null
+    ): Flow<ResultWrapper<Boolean>>
+
 }
 
 class UserRepositoryImpl(private val dataSource: FirebaseAuthDataSource) : UserRepository {
@@ -41,5 +48,12 @@ class UserRepositoryImpl(private val dataSource: FirebaseAuthDataSource) : UserR
 
     override suspend fun doLogin(email: String, password: String): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.doLogin(email, password) }
+    }
+
+    override suspend fun updateProfile(
+        fullName: String?,
+        photoUri: Uri?
+    ): Flow<ResultWrapper<Boolean>> {
+        return proceedFlow { dataSource.updateProfile(fullName, photoUri) }
     }
 }
