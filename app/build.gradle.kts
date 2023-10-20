@@ -47,11 +47,11 @@ android {
     flavorDimensions += "version"
     productFlavors {
         create("production"){
-            buildConfigField("String", "BASE_URL", "\"https://39cc9dac-21fc-401d-9cec-9100ffc66406.mock.pstmn.io/\"")
+            buildConfigField("String", "BASE_URL", "\"https://0ae86692-3ea8-487f-a0aa-65f652b80702.mock.pstmn.io/\"")
         }
 
         create("integration"){
-            buildConfigField("String", "BASE_URL", "\"https://39cc9dac-21fc-401d-9cec-9100ffc66406.mock.pstmn.io/\"")
+            buildConfigField("String", "BASE_URL", "\"https://0ae86692-3ea8-487f-a0aa-65f652b80702.mock.pstmn.io/\"")
         }
     }
 }
