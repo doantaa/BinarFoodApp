@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.data.local.database.AppDatabase
 import com.binar.binarfoodapp.data.local.database.datasource.CartDataSourceImpl
+import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
+import com.binar.binarfoodapp.data.network.api.service.RestaurantService
+import com.binar.binarfoodapp.data.repository.CartRepository
 import com.binar.binarfoodapp.data.repository.CartRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentCartBinding
 import com.binar.binarfoodapp.model.Cart
@@ -45,7 +47,6 @@ class CartFragment : Fragment() {
             override fun onUserDoneEditingNotes(cart: Cart) {
                 viewModel.setCartNotes(cart)
                 hideKeyboard()
-                Toast.makeText(requireContext(), "Ini toast", Toast.LENGTH_SHORT).show()
 
             }
         })
@@ -55,14 +56,20 @@ class CartFragment : Fragment() {
         val database = AppDatabase.getInstance(requireContext())
         val cartDao = database.cartDao()
         val cartDataSource = CartDataSourceImpl(cartDao)
-        val repo = CartRepositoryImpl(cartDataSource)
+
+        //API
+        val service = RestaurantService.invoke()
+        val apiDataSource = RestaurantApiDataSource(service)
+
+
+        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
         GenericViewModelFactory.create(CartViewModel(repo))
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCartBinding.inflate(inflater, container, false)
         return binding.root
     }

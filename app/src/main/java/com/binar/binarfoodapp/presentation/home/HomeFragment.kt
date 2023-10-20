@@ -1,11 +1,9 @@
 package com.binar.binarfoodapp.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -52,7 +50,6 @@ class HomeFragment : Fragment() {
     private val categoryListAdapter: CategoryListAdapter by lazy {
         CategoryListAdapter {
             viewModel.getMenus(it.name.lowercase())
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -116,7 +113,6 @@ class HomeFragment : Fragment() {
                     binding.rvCategory.isVisible = true
                     binding.categoryLayoutState.tvError.isVisible = false
                     binding.categoryLayoutState.pbLoading.isVisible = false
-                    Log.e("JDAR", "Aw you found me!")
 
                     result.payload?.let { category ->
                         categoryListAdapter.setData(category)

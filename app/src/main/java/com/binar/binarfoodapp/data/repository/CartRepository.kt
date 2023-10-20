@@ -4,14 +4,15 @@ import com.binar.binarfoodapp.data.local.database.datasource.CartDataSource
 import com.binar.binarfoodapp.data.local.database.entity.CartEntity
 import com.binar.binarfoodapp.data.local.database.mapper.toCartEntity
 import com.binar.binarfoodapp.data.local.database.mapper.toCartList
+import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
+import com.binar.binarfoodapp.data.network.api.model.order.OrderItemRequest
+import com.binar.binarfoodapp.data.network.api.model.order.OrderRequest
 import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.utils.ResultWrapper
 import com.binar.binarfoodapp.utils.proceed
 import com.binar.binarfoodapp.utils.proceedFlow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -22,11 +23,13 @@ interface CartRepository {
     suspend fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun setOrderNotes(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
-    fun cleanCart() : Flow<ResultWrapper<Boolean>>
+    suspend fun cleanCart()
+    suspend fun order(carts: List<Cart>): Flow<ResultWrapper<Boolean>>
 }
 
 class CartRepositoryImpl(
-    private val dataSource: CartDataSource
+    private val dataSource: CartDataSource,
+    private val restaurantApiDataSource: RestaurantApiDataSource
 ) : CartRepository {
     override fun getCartData(): Flow<ResultWrapper<Pair<List<Cart>, Int>>> {
         return dataSource.getAllCarts()
@@ -48,12 +51,11 @@ class CartRepositoryImpl(
             }
             .onStart {
                 emit(ResultWrapper.Loading())
-                delay(2000)
             }
     }
 
     override suspend fun createCart(menu: Menu, totalQuantity: Int): Flow<ResultWrapper<Boolean>> {
-        return menu.name?.let {
+        return menu.name.let {
             proceedFlow {
                 val affectedRow = dataSource.insertCart(
                     CartEntity(
@@ -65,8 +67,6 @@ class CartRepositoryImpl(
                 )
                 affectedRow > 0
             }
-        } ?: flow {
-            emit(ResultWrapper.Error(IllegalStateException("Menu Id not found")))
         }
     }
 
@@ -97,8 +97,21 @@ class CartRepositoryImpl(
         return proceedFlow { dataSource.deleteCart(item.toCartEntity()) > 0 }
     }
 
-    override fun cleanCart(): Flow<ResultWrapper<Boolean>> {
-        return proceedFlow { dataSource.deleteAllCart() > 0 }
+    override suspend fun cleanCart() {
+        proceed { dataSource.deleteAllCart() }
     }
 
+    override suspend fun order(carts: List<Cart>): Flow<ResultWrapper<Boolean>> {
+        return proceedFlow {
+            val orderItems = carts.map {
+                OrderItemRequest(it.menuName, it.itemQuantity, it.orderNotes, it.menuPrice)
+            }
+            val orderRequest = OrderRequest(
+                username = "username",
+                total = orderItems.map { it.qty?.times((it.price ?: 0)) ?: 0 }.sum(),
+                orders = orderItems
+            )
+            restaurantApiDataSource.createOrder(orderRequest).status == true
+        }
+    }
 }

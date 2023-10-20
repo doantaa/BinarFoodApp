@@ -43,4 +43,10 @@
     <string name="text_label_confirm_password">Konfirmasi Password</string>
     <string name="text_clickable_to_register">Daftar disini</string>
     <string name="text_clickable_to_login">Login disini</string>
+    <string name="text_logout">Keluar</string>
+    <string name="text_logout_confirmation">Apakah anda ingin keluar?</string>
+    <string name="text_yes">Ya</string>
+    <string name="text_no">Tidak</string>
+    <string name="text_back">Kembali</string>
+    <string name="text_save">Simpan</string>
 </resources>

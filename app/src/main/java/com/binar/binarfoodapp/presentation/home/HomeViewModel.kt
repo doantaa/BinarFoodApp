@@ -1,5 +1,6 @@
 package com.binar.binarfoodapp.presentation.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +29,8 @@ class HomeViewModel(
 
     fun getMenus(category : String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
-            repo.getMenus(category).collect() { result ->
+            repo.getMenus(if(category == "all") null else category).collect() { result ->
+                Log.e("JAHAHAHA", category.toString())
                 _menus.postValue(result)
             }
         }

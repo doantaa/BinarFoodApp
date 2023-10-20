@@ -1,6 +1,5 @@
 package com.binar.binarfoodapp.presentation.editprofile
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -11,7 +10,6 @@ import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
 import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityEditProfileBinding
-import com.binar.binarfoodapp.presentation.profile.ProfileFragment
 import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.proceedWhen
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +42,7 @@ class EditProfileActivity : AppCompatActivity() {
             it.proceedWhen(
                 doOnSuccess = {
                     Toast.makeText(this, "Profile Berhasil Diubah", Toast.LENGTH_SHORT).show()
-                    returnToProfile()
+                    finish()
                 }
             )
         }
@@ -67,13 +65,6 @@ class EditProfileActivity : AppCompatActivity() {
 
             }
         }
-    }
-
-    private fun returnToProfile() {
-        val intent = Intent(this, ProfileFragment::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        startActivity(intent)
     }
 
     private fun checkNameValidation(): Boolean {
