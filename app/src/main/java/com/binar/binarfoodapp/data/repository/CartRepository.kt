@@ -107,7 +107,7 @@ class CartRepositoryImpl(
                 OrderItemRequest(it.menuName, it.itemQuantity, it.orderNotes, it.menuPrice)
             }
             val orderRequest = OrderRequest(
-                username = "username",
+                username = "username",//username nanti diganti
                 total = orderItems.map { it.qty?.times((it.price ?: 0)) ?: 0 }.sum(),
                 orders = orderItems
             )
