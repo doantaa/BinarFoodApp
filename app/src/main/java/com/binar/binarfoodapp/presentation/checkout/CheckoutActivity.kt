@@ -55,9 +55,11 @@ class CheckoutActivity : AppCompatActivity() {
 
         binding.btnCheckout.setOnClickListener{
             Toast.makeText(this, "Pesanan anda berhasil", Toast.LENGTH_SHORT).show()
+            viewModel.cleanCart()
             finish()
         }
     }
+
 
     private fun setupList() {
         binding.layoutContent.rvCart.adapter = cartAdapter

@@ -4,29 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import com.binar.binarfoodapp.data.dummy.DummyMenuDataSourceImpl
-import com.binar.binarfoodapp.data.local.database.AppDatabase.Companion.getInstance
 import com.binar.binarfoodapp.data.local.database.dao.CartDao
-import com.binar.binarfoodapp.data.local.database.dao.MenuDao
 import com.binar.binarfoodapp.data.local.database.entity.CartEntity
-import com.binar.binarfoodapp.data.local.database.entity.MenuEntity
-import com.binar.binarfoodapp.data.local.database.mapper.toMenuEntity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 
 @Database(
-    entities = [MenuEntity::class, CartEntity::class],
-    version = 1,
+    entities = [CartEntity::class],
+    version = 2,
     exportSchema = true
 )
 
-abstract class AppDatabase : RoomDatabase(){
-    abstract fun cartDao() : CartDao
-    abstract fun menuDao() : MenuDao
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun cartDao(): CartDao
 
     companion object {
         private const val DB_NAME = "FoodApp.db"
@@ -34,14 +23,13 @@ abstract class AppDatabase : RoomDatabase(){
         @Volatile
         private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this){
+            return INSTANCE ?: synchronized(this) {
 
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
                     DB_NAME
                 )
-                    .addCallback(DatabaseSeederCallback(context))
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
@@ -52,37 +40,3 @@ abstract class AppDatabase : RoomDatabase(){
     }
 }
 
-class DatabaseSeederCallback(private val context: Context) : RoomDatabase.Callback() {
-    private val job = Job()
-    private val scope = CoroutineScope(Dispatchers.Main + job)
-
-    override fun onCreate(db: SupportSQLiteDatabase) {
-        super.onCreate(db)
-        scope.launch {
-            getInstance(context).menuDao().insertMenus(prepopulateMenus())
-            getInstance(context).cartDao().insertCarts(prepopulateCarts())
-        }
-    }
-
-    private fun prepopulateMenus(): List<MenuEntity> {
-        return DummyMenuDataSourceImpl().getMenuData().toMenuEntity()
-    }
-
-    private fun prepopulateCarts(): List<CartEntity> {
-        return mutableListOf(
-            CartEntity(
-                id = 1,
-                menuId = 1,
-                orderNotes = "Hangat pak",
-                itemQuantity = 2
-            ),
-            CartEntity(
-                id = 2,
-                menuId = 2,
-                orderNotes = "Jangan lupa sendok mba",
-                itemQuantity = 3
-            ),
-        )
-    }
-
-}

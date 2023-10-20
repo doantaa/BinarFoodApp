@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartCheckoutSummaryBinding
-import com.binar.binarfoodapp.model.CartMenu
+import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.presentation.adapter.viewholder.CheckoutSumarryListViewHolder
 
 class CheckoutSummaryAdapter() : RecyclerView.Adapter<ViewHolder>(){
 
-    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<CartMenu>(){
-        override fun areItemsTheSame(oldItem: CartMenu, newItem: CartMenu): Boolean {
-            return oldItem.cart.id == newItem.cart.id
+    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Cart>(){
+        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: CartMenu, newItem: CartMenu): Boolean {
+        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -36,10 +36,10 @@ class CheckoutSummaryAdapter() : RecyclerView.Adapter<ViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder as ViewHolderBinder<CartMenu>).bind(differ.currentList[position])
+        (holder as ViewHolderBinder<Cart>).bind(differ.currentList[position])
     }
 
-    fun setData(cartData: List<CartMenu>){
+    fun setData(cartData: List<Cart>){
         differ.submitList(cartData)
     }
 

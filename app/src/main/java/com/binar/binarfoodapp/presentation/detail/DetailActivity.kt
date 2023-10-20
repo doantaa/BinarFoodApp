@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -54,6 +55,9 @@ class DetailActivity : AppCompatActivity() {
                 doOnSuccess = {
                     Toast.makeText(this, "${this.viewModel.menu?.name} added to cart", Toast.LENGTH_SHORT).show()
                     finish()
+                },
+                doOnError = {
+                    Log.e("ASDF", it.toString())
                 }
             )
         }

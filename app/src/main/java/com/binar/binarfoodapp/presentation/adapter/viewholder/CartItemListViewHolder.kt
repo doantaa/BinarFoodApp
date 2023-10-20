@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.binar.binarfoodapp.core.ViewHolderBinder
 import com.binar.binarfoodapp.databinding.ItemCartBinding
-import com.binar.binarfoodapp.model.CartMenu
+import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.presentation.adapter.CartListener
 import com.binar.binarfoodapp.utils.doneEditing
 import com.binar.binarfoodapp.utils.toCurrencyFormat
@@ -13,37 +13,37 @@ import com.binar.binarfoodapp.utils.toCurrencyFormat
 class CartItemListViewHolder(
     private val binding: ItemCartBinding,
     private val cartListener: CartListener? = null
-) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<CartMenu> {
-    override fun bind(item: CartMenu) {
+) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Cart> {
+    override fun bind(item: Cart) {
         setCartData(item)
         setCartNotes(item)
         setClickListeners(item)
     }
 
-    private fun setCartData(item: CartMenu) {
+    private fun setCartData(item: Cart) {
         with(binding) {
-            binding.ivMenuImage.load(item.menu.imageUrl) {
+            binding.ivMenuImage.load(item.menuImgUrl) {
                 crossfade(true)
             }
-            tvCounter.text = item.cart.itemQuantity.toString()
-            tvMenuName.text = item.menu.name
-            tvCountPrice.text = (item.cart.itemQuantity * item.menu.price).toCurrencyFormat()
+            tvCounter.text = item.itemQuantity.toString()
+            tvMenuName.text = item.menuName
+            tvCountPrice.text = (item.itemQuantity * item.menuPrice).toCurrencyFormat()
         }
     }
 
-    private fun setClickListeners(menu: CartMenu) {
+    private fun setClickListeners(menu: Cart) {
         with(binding){
-            btnMinus.setOnClickListener{ cartListener?.onMinusTotalItemCartClicked(menu.cart)}
-            btnPlus.setOnClickListener{cartListener?.onPlusTotalItemCartClicked(menu.cart)}
-            btnRemove.setOnClickListener{cartListener?.onRemoveCartClicked(menu.cart)}
+            btnMinus.setOnClickListener{ cartListener?.onMinusTotalItemCartClicked(menu)}
+            btnPlus.setOnClickListener{cartListener?.onPlusTotalItemCartClicked(menu)}
+            btnRemove.setOnClickListener{cartListener?.onRemoveCartClicked(menu)}
         }
     }
 
-    private fun setCartNotes(item: CartMenu) {
-        binding.etOrderNote.setText(item.cart.orderNotes)
+    private fun setCartNotes(item: Cart) {
+        binding.etOrderNote.setText(item.orderNotes)
         binding.etOrderNote.doneEditing {
             binding.etOrderNote.clearFocus()
-            val newItem = item.cart.copy().apply {
+            val newItem = item.copy().apply {
                 orderNotes = binding.etOrderNote.text.toString().trim()
             }
             cartListener?.onUserDoneEditingNotes(newItem)
