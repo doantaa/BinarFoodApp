@@ -10,18 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.local.database.AppDatabase
-import com.binar.binarfoodapp.data.local.database.datasource.CartDataSourceImpl
-import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
-import com.binar.binarfoodapp.data.network.api.service.RestaurantService
-import com.binar.binarfoodapp.data.repository.CartRepository
-import com.binar.binarfoodapp.data.repository.CartRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentCartBinding
+import com.binar.binarfoodapp.di.AppInjection
 import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.presentation.adapter.CartListAdapter
 import com.binar.binarfoodapp.presentation.adapter.CartListener
 import com.binar.binarfoodapp.presentation.checkout.CheckoutActivity
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.hideKeyboard
 import com.binar.binarfoodapp.utils.proceedWhen
 import com.binar.binarfoodapp.utils.toCurrencyFormat
@@ -53,17 +47,7 @@ class CartFragment : Fragment() {
     }
 
     private val viewModel: CartViewModel by viewModels {
-        val database = AppDatabase.getInstance(requireContext())
-        val cartDao = database.cartDao()
-        val cartDataSource = CartDataSourceImpl(cartDao)
-
-        //API
-        val service = RestaurantService.invoke()
-        val apiDataSource = RestaurantApiDataSource(service)
-
-
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
-        GenericViewModelFactory.create(CartViewModel(repo))
+        AppInjection.getCartViewModelFactory(requireContext())
     }
 
     override fun onCreateView(
