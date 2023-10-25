@@ -10,46 +10,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSourceImpl
-import com.binar.binarfoodapp.data.local.datastore.appDataStore
-import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
-import com.binar.binarfoodapp.data.network.api.service.RestaurantService
-import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.binar.binarfoodapp.data.repository.MenuRepositoryImpl
-import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
+import com.binar.binarfoodapp.di.AppInjection
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.presentation.detail.DetailActivity
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.AdapterLayoutMode
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.CategoryListAdapter
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.FoodListAdapter
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
-import com.binar.binarfoodapp.utils.PreferenceDataStoreHelperImpl
 import com.binar.binarfoodapp.utils.proceedWhen
-import com.google.firebase.auth.FirebaseAuth
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
     private val viewModel: HomeViewModel by viewModels {
-        val service = RestaurantService.invoke()
-        val dataSource = RestaurantApiDataSource(service)
-        val repository = MenuRepositoryImpl(dataSource)
-
-        val dataStore = this.requireContext().appDataStore
-        val dataStoreHelper = PreferenceDataStoreHelperImpl(dataStore)
-        val userPreferenceDataSource = UserPreferenceDataSourceImpl(dataStoreHelper)
-
-        val firebaseDataSource = FirebaseAuthDataSourceImpl(FirebaseAuth.getInstance())
-        val userRepository = UserRepositoryImpl(firebaseDataSource)
-        GenericViewModelFactory.create(
-            HomeViewModel(
-                repository,
-                userPreferenceDataSource,
-                userRepository
-            )
-        )
+        AppInjection.getHomeViewModelFactory(requireContext())
     }
 
     private val foodListAdapter: FoodListAdapter by lazy {
