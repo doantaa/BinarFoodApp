@@ -98,6 +98,7 @@ class CartFragment : Fragment() {
                 binding.layoutState.pbLoading.isVisible = false
                 binding.layoutState.tvError.isVisible = true
                 binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
+                binding.cvSectionCheckout.isVisible = false
                 data.payload?.let { (_, totalPrice) ->
                     binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
                 }
