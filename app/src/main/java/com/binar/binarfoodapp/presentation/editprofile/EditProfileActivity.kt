@@ -2,18 +2,14 @@ package com.binar.binarfoodapp.presentation.editprofile
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityEditProfileBinding
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.proceedWhen
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -21,12 +17,8 @@ class EditProfileActivity : AppCompatActivity() {
         ActivityEditProfileBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: EditProfileViewModel by viewModels {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(EditProfileViewModel(repo))
-    }
+    private val viewModel: EditProfileViewModel by viewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

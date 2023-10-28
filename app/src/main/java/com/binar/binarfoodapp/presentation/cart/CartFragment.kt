@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.databinding.FragmentCartBinding
-import com.binar.binarfoodapp.di.AppInjection
 import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.presentation.adapter.CartListAdapter
 import com.binar.binarfoodapp.presentation.adapter.CartListener
@@ -19,10 +17,17 @@ import com.binar.binarfoodapp.presentation.checkout.CheckoutActivity
 import com.binar.binarfoodapp.utils.hideKeyboard
 import com.binar.binarfoodapp.utils.proceedWhen
 import com.binar.binarfoodapp.utils.toCurrencyFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
+
+    //    private val viewModel: CartViewModel by viewModels {
+//        AppInjection.getCartViewModelFactory(requireContext())
+//    }
+
+    private val viewModel: CartViewModel by viewModel()
 
     private val adapter: CartListAdapter by lazy {
         CartListAdapter(object : CartListener {
@@ -44,10 +49,6 @@ class CartFragment : Fragment() {
 
             }
         })
-    }
-
-    private val viewModel: CartViewModel by viewModels {
-        AppInjection.getCartViewModelFactory(requireContext())
     }
 
     override fun onCreateView(

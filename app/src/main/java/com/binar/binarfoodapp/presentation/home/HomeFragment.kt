@@ -7,25 +7,26 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.databinding.FragmentHomeBinding
-import com.binar.binarfoodapp.di.AppInjection
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.presentation.detail.DetailActivity
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.AdapterLayoutMode
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.CategoryListAdapter
 import com.binar.binarfoodapp.presentation.home.adapter.subadapter.FoodListAdapter
 import com.binar.binarfoodapp.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private val viewModel: HomeViewModel by viewModels {
-        AppInjection.getHomeViewModelFactory(requireContext())
-    }
+//    private val viewModel: HomeViewModel by viewModels {
+//        AppInjection.getHomeViewModelFactory(requireContext())
+//    }
+
+    private val viewModel: HomeViewModel by viewModel<HomeViewModel>()
 
     private val foodListAdapter: FoodListAdapter by lazy {
         FoodListAdapter(

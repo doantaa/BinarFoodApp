@@ -4,38 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityLoginBinding
 import com.binar.binarfoodapp.presentation.authentication.register.RegisterActivity
 import com.binar.binarfoodapp.presentation.main.MainActivity
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.highLightWord
 import com.binar.binarfoodapp.utils.proceedWhen
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
-
-    private val viewModel: LoginViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
-
-    private fun createViewModel(): LoginViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository = UserRepositoryImpl(dataSource)
-        return LoginViewModel(repository)
-    }
-
+    private val viewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

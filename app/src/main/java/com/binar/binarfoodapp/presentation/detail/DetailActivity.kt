@@ -5,20 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
-import com.binar.binarfoodapp.data.local.database.AppDatabase
-import com.binar.binarfoodapp.data.local.database.datasource.CartDataSourceImpl
-import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
-import com.binar.binarfoodapp.data.network.api.service.RestaurantService
-import com.binar.binarfoodapp.data.repository.CartRepository
-import com.binar.binarfoodapp.data.repository.CartRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityDetailBinding
 import com.binar.binarfoodapp.model.Menu
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.proceedWhen
 import com.binar.binarfoodapp.utils.toCurrencyFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DetailActivity : AppCompatActivity() {
 
@@ -26,19 +20,7 @@ class DetailActivity : AppCompatActivity() {
         ActivityDetailBinding.inflate(layoutInflater)
     }
 
-    private val viewModel: DetailViewModel by viewModels {
-        val database = AppDatabase.getInstance(this)
-        val cartDao = database.cartDao()
-        val cartDataSource = CartDataSourceImpl(cartDao)
-        //API
-        val service = RestaurantService.invoke()
-        val apiDataSource = RestaurantApiDataSource(service)
-
-
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
-        GenericViewModelFactory.create(DetailViewModel(intent?.extras, repo))
-
-    }
+    private val viewModel: DetailViewModel by viewModel { parametersOf(intent?.extras) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

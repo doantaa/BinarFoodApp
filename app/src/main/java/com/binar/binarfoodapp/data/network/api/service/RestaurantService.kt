@@ -5,6 +5,7 @@ import com.binar.binarfoodapp.data.network.api.model.category.CategoriesResponse
 import com.binar.binarfoodapp.data.network.api.model.menu.MenusResponse
 import com.binar.binarfoodapp.data.network.api.model.order.OrderRequest
 import com.binar.binarfoodapp.data.network.api.model.order.OrderResponse
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,8 +27,9 @@ interface RestaurantService {
 
     companion object {
         @JvmStatic
-        operator fun invoke(): RestaurantService {
+        operator fun invoke(chucker: ChuckerInterceptor): RestaurantService {
             val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(chucker)
                 .connectTimeout(120, TimeUnit.SECONDS)
                 .readTimeout(120, TimeUnit.SECONDS)
                 .build()

@@ -2,40 +2,19 @@ package com.binar.binarfoodapp.presentation.checkout
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.local.database.AppDatabase
-import com.binar.binarfoodapp.data.local.database.datasource.CartDataSource
-import com.binar.binarfoodapp.data.local.database.datasource.CartDataSourceImpl
-import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
-import com.binar.binarfoodapp.data.network.api.service.RestaurantService
-import com.binar.binarfoodapp.data.repository.CartRepository
-import com.binar.binarfoodapp.data.repository.CartRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityCheckoutBinding
 import com.binar.binarfoodapp.presentation.adapter.CartListAdapter
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.proceedWhen
 import com.binar.binarfoodapp.utils.toCurrencyFormat
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckoutActivity : AppCompatActivity() {
 
-    private val viewModel: CheckoutViewModel by viewModels {
-        // LOCAL
-        val database = AppDatabase.getInstance(this)
-        val cartDao = database.cartDao()
-        val cartDataSource: CartDataSource = CartDataSourceImpl(cartDao)
-
-        //API
-        val service = RestaurantService.invoke()
-        val apiDataSource = RestaurantApiDataSource(service)
-
-
-        val repo: CartRepository = CartRepositoryImpl(cartDataSource, apiDataSource)
-        GenericViewModelFactory.create(CheckoutViewModel(repo))
-    }
+    private val viewModel: CheckoutViewModel by viewModel()
 
     private val binding: ActivityCheckoutBinding by lazy {
         ActivityCheckoutBinding.inflate(layoutInflater)
@@ -59,11 +38,11 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun setClickListener() {
-        binding.ivBack.setOnClickListener{
+        binding.ivBack.setOnClickListener {
             onBackPressed()
         }
 
-        binding.btnCheckout.setOnClickListener{
+        binding.btnCheckout.setOnClickListener {
             viewModel.createOrder()
         }
     }
