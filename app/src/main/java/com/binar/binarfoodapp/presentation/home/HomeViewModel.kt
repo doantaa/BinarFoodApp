@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSource
 import com.binar.binarfoodapp.data.repository.MenuRepository
-import com.binar.binarfoodapp.data.repository.UserPreferenceRepository
 import com.binar.binarfoodapp.data.repository.UserRepository
 import com.binar.binarfoodapp.model.Category
 import com.binar.binarfoodapp.model.Menu
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val repo: MenuRepository,
-    private val userPreferenceRepository: UserPreferenceRepository,
+    private val userPreferenceDataSource: UserPreferenceDataSource,
     private val userRepository: UserRepository
 ) : ViewModel() {
 
@@ -47,11 +47,11 @@ class HomeViewModel(
 
     fun setUserListViewMode(isList: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            userPreferenceRepository.setUserListViewModePreference(isList)
+            userPreferenceDataSource.setUserListViewModePreference(isList)
         }
     }
 
-    fun getUserListViewLiveData() = userPreferenceRepository
+    fun getUserListViewLiveData() = userPreferenceDataSource
         .getUserListViewModePrefFlow()
         .asLiveData(Dispatchers.IO)
 

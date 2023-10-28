@@ -4,19 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.ActivityRegisterBinding
 import com.binar.binarfoodapp.presentation.authentication.login.LoginActivity
 import com.binar.binarfoodapp.presentation.main.MainActivity
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
 import com.binar.binarfoodapp.utils.highLightWord
 import com.binar.binarfoodapp.utils.proceedWhen
-import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -24,17 +20,7 @@ class RegisterActivity : AppCompatActivity() {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
 
-    private fun createViewModel(): RegisterViewModel {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repository = UserRepositoryImpl(dataSource)
-        return RegisterViewModel(repository)
-    }
-
-    private val viewModel: RegisterViewModel by viewModels {
-        GenericViewModelFactory.create(createViewModel())
-    }
-
+    private val viewModel: RegisterViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,28 +32,24 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun observeResult() {
         viewModel.registerResult.observe(this) {
-            it.proceedWhen(
-                doOnSuccess = {
-                    binding.btnRegister.isVisible = true
-                    binding.btnRegister.isEnabled = false
-                    binding.pbLoading.isVisible = false
-                    navigateToMain()
-                },
-                doOnLoading = {
-                    binding.btnRegister.isVisible = false
-                    binding.pbLoading.isVisible = true
-                },
-                doOnError = {
-                    binding.btnRegister.isVisible = true
-                    binding.btnRegister.isEnabled = true
-                    binding.pbLoading.isVisible = false
-                    Toast.makeText(
-                        this,
-                        "Register Failed ${it.exception?.message.orEmpty()}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            )
+            it.proceedWhen(doOnSuccess = {
+                binding.btnRegister.isVisible = true
+                binding.btnRegister.isEnabled = false
+                binding.pbLoading.isVisible = false
+                navigateToMain()
+            }, doOnLoading = {
+                binding.btnRegister.isVisible = false
+                binding.pbLoading.isVisible = true
+            }, doOnError = {
+                binding.btnRegister.isVisible = true
+                binding.btnRegister.isEnabled = true
+                binding.pbLoading.isVisible = false
+                Toast.makeText(
+                    this,
+                    "Register Failed ${it.exception?.message.orEmpty()}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            })
         }
     }
 
@@ -104,8 +86,7 @@ class RegisterActivity : AppCompatActivity() {
         return checkNameValidation(fullName) && checkEmailValidation(email) && checkPasswordValidation(
             password
         ) && checkPasswordValidation(confirmPassword) && checkPasswordAndConfirmation(
-            password,
-            confirmPassword
+            password, confirmPassword
         )
     }
 

@@ -4,7 +4,7 @@ import com.binar.binarfoodapp.data.local.database.datasource.CartDataSource
 import com.binar.binarfoodapp.data.local.database.entity.CartEntity
 import com.binar.binarfoodapp.data.local.database.mapper.toCartEntity
 import com.binar.binarfoodapp.data.local.database.mapper.toCartList
-import com.binar.binarfoodapp.data.network.api.datasource.RestaurantApiDataSource
+import com.binar.binarfoodapp.data.network.api.datasource.RestaurantDataSource
 import com.binar.binarfoodapp.data.network.api.model.order.OrderItemRequest
 import com.binar.binarfoodapp.data.network.api.model.order.OrderRequest
 import com.binar.binarfoodapp.model.Cart
@@ -29,7 +29,7 @@ interface CartRepository {
 
 class CartRepositoryImpl(
     private val dataSource: CartDataSource,
-    private val restaurantApiDataSource: RestaurantApiDataSource
+    private val restaurantApiDataSource: RestaurantDataSource
 ) : CartRepository {
     override fun getCartData(): Flow<ResultWrapper<Pair<List<Cart>, Int>>> {
         return dataSource.getAllCarts()

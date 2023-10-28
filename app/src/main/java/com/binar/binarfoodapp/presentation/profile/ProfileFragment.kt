@@ -8,27 +8,18 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.binar.binarfoodapp.R
-import com.binar.binarfoodapp.data.network.firebase.auth.FirebaseAuthDataSourceImpl
-import com.binar.binarfoodapp.data.repository.UserRepositoryImpl
 import com.binar.binarfoodapp.databinding.FragmentProfileBinding
 import com.binar.binarfoodapp.presentation.authentication.login.LoginActivity
 import com.binar.binarfoodapp.presentation.editprofile.EditProfileActivity
-import com.binar.binarfoodapp.utils.GenericViewModelFactory
-import com.google.firebase.auth.FirebaseAuth
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
-    private val viewModel: ProfileViewModel by viewModels {
-        val firebaseAuth = FirebaseAuth.getInstance()
-        val dataSource = FirebaseAuthDataSourceImpl(firebaseAuth)
-        val repo = UserRepositoryImpl(dataSource)
-        GenericViewModelFactory.create(ProfileViewModel(repo))
-    }
+    private val viewModel: ProfileViewModel by viewModel()
 
 
     override fun onCreateView(
