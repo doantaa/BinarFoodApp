@@ -48,6 +48,11 @@ class ProfileFragment : Fragment() {
         setClickListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     private fun getData() {
         viewModel.getCurrentUser()
     }

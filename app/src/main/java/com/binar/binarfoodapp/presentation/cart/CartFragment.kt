@@ -92,7 +92,7 @@ class CartFragment : Fragment() {
                 binding.layoutState.pbLoading.isVisible = false
                 binding.layoutState.tvError.isVisible = true
                 binding.layoutState.tvError.text = err.exception?.message.orEmpty()
-                binding.rvCartList.isVisible = false
+                binding.rvCartList.isVisible =  false
             }, doOnEmpty = { data ->
                 binding.layoutState.root.isVisible = true
                 binding.layoutState.pbLoading.isVisible = false
