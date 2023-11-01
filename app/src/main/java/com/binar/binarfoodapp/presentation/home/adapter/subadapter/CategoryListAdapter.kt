@@ -14,7 +14,7 @@ class CategoryListAdapter(
     private val onItemClick: (Category) -> Unit
 ) : RecyclerView.Adapter<CategorySectionViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Category>(){
+    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Category>() {
         override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
             return oldItem.id == newItem.id
         }
@@ -42,11 +42,7 @@ class CategoryListAdapter(
         (holder as ViewHolderBinder<Category>).bind(differ.currentList[position])
     }
 
-    fun setData(categoryData: List<Category>){
+    fun setData(categoryData: List<Category>) {
         differ.submitList(categoryData)
-    }
-
-    fun refreshList(){
-        notifyItemRangeChanged(0, differ.currentList.size)
     }
 }
