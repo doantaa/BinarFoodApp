@@ -44,7 +44,6 @@ class HomeViewModel(
         }
     }
 
-
     fun setUserListViewMode(isList: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             userPreferenceDataSource.setUserListViewModePreference(isList)

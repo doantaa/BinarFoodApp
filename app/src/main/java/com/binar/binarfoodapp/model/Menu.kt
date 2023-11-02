@@ -2,7 +2,6 @@ package com.binar.binarfoodapp.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.UUID
 
 @Parcelize
 data class Menu(
@@ -11,4 +10,4 @@ data class Menu(
     val price: Int,
     val imageUrl: String,
     val description: String
-): Parcelable
+) : Parcelable

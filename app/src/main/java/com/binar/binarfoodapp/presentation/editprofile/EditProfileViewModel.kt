@@ -17,7 +17,7 @@ class EditProfileViewModel(
     val updateProfileResult: LiveData<ResultWrapper<Boolean>>
         get() = _updateProfileResult
 
-    fun updateProfile(fullName: String){
+    fun updateProfile(fullName: String) {
         viewModelScope.launch {
             repository.updateProfile(fullName).collect() { result ->
                 _updateProfileResult.postValue(result)

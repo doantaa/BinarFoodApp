@@ -50,7 +50,6 @@ class DetailActivity : AppCompatActivity() {
                     finish()
                 },
                 doOnError = {
-
                 }
             )
         }
@@ -62,9 +61,7 @@ class DetailActivity : AppCompatActivity() {
             binding.tvMenuName.text = menuItem.name
             binding.tvMenuPrice.text = menuItem.price.toCurrencyFormat()
             binding.tvMenuDescription.text = menuItem.description
-
         }
-
     }
 
     private fun setClickListener() {
@@ -89,7 +86,6 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-
     private fun navigateToMap() {
         val intent = Intent(
             Intent.ACTION_VIEW,
@@ -97,7 +93,6 @@ class DetailActivity : AppCompatActivity() {
         )
         startActivity(intent)
     }
-
 
     companion object {
         const val EXTRA_FOOD = "EXTRA_FOOD"

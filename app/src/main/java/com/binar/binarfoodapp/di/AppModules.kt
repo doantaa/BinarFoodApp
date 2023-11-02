@@ -54,13 +54,13 @@ object AppModules {
         // Database
         single<CartDataSource> { CartDataSourceImpl(get()) }
 
-        //User Preference
+        // User Preference
         single<UserPreferenceDataSource> { UserPreferenceDataSourceImpl(get()) }
 
-        //Menu Data Source / RestaurantApi DataSource
+        // Menu Data Source / RestaurantApi DataSource
         single<RestaurantDataSource> { RestaurantApiDataSource(get()) }
 
-        //Firebase
+        // Firebase
         single<FirebaseAuthDataSource> { FirebaseAuthDataSourceImpl(get()) }
     }
 

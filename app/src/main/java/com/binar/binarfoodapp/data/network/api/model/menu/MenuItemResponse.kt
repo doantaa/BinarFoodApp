@@ -1,9 +1,8 @@
 package com.binar.binarfoodapp.data.network.api.model.menu
 
-
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.binar.binarfoodapp.model.Menu
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class MenuItemResponse(

@@ -6,9 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserPreferenceDataSource {
     fun getUserListViewModePrefFlow(): Flow<Boolean>
-    suspend fun setUserListViewModePreference(isLinear : Boolean)
+    suspend fun setUserListViewModePreference(isLinear: Boolean)
     suspend fun getUserListViewModePreference(): Boolean
-
 }
 
 class UserPreferenceDataSourceImpl(
@@ -27,7 +26,6 @@ class UserPreferenceDataSourceImpl(
     }
 
     companion object {
-        val PREF_USER_LIST_VIEW =  booleanPreferencesKey("PREF_USER_LIST_VIEW")
+        val PREF_USER_LIST_VIEW = booleanPreferencesKey("PREF_USER_LIST_VIEW")
     }
-
 }

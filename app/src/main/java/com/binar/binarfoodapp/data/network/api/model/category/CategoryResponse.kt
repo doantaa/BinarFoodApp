@@ -1,9 +1,8 @@
 package com.binar.binarfoodapp.data.network.api.model.category
 
-
-import com.google.gson.annotations.SerializedName
 import androidx.annotation.Keep
 import com.binar.binarfoodapp.model.Category
+import com.google.gson.annotations.SerializedName
 
 @Keep
 data class CategoryResponse(
@@ -18,4 +17,4 @@ fun CategoryResponse.toCategory() = Category(
     imageUrl = this.imageUrl.orEmpty()
 )
 
-fun Collection<CategoryResponse>.toCategoryList() = this.map { it.toCategory()}
+fun Collection<CategoryResponse>.toCategoryList() = this.map { it.toCategory() }

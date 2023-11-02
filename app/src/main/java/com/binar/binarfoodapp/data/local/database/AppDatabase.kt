@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import com.binar.binarfoodapp.data.local.database.dao.CartDao
 import com.binar.binarfoodapp.data.local.database.entity.CartEntity
 
-
 @Database(
     entities = [CartEntity::class],
     version = 2,
@@ -24,7 +23,6 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
@@ -36,7 +34,5 @@ abstract class AppDatabase : RoomDatabase() {
                 instance
             }
         }
-
     }
 }
-

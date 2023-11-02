@@ -18,5 +18,4 @@ class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
     }
 
     fun doLogout() = repository.doLogout()
-
 }

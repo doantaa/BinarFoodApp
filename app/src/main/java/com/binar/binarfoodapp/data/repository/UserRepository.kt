@@ -8,14 +8,15 @@ import com.binar.binarfoodapp.utils.ResultWrapper
 import com.binar.binarfoodapp.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
 
-
 interface UserRepository {
     fun isLoggedIn(): Boolean
     fun getCurrentUser(): User?
     fun doLogout(): Boolean
 
     suspend fun doRegister(
-        fullName: String, email: String, password: String
+        fullName: String,
+        email: String,
+        password: String
     ): Flow<ResultWrapper<Boolean>>
 
     suspend fun doLogin(email: String, password: String): Flow<ResultWrapper<Boolean>>
@@ -24,7 +25,6 @@ interface UserRepository {
         fullName: String? = null,
         photoUri: Uri? = null
     ): Flow<ResultWrapper<Boolean>>
-
 }
 
 class UserRepositoryImpl(private val dataSource: FirebaseAuthDataSource) : UserRepository {
@@ -41,7 +41,9 @@ class UserRepositoryImpl(private val dataSource: FirebaseAuthDataSource) : UserR
     }
 
     override suspend fun doRegister(
-        fullName: String, email: String, password: String
+        fullName: String,
+        email: String,
+        password: String
     ): Flow<ResultWrapper<Boolean>> {
         return proceedFlow { dataSource.doRegister(fullName, email, password) }
     }

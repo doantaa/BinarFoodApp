@@ -18,35 +18,42 @@ class FoodListAdapter(
     private val onItemClick: (Menu) -> Unit
 ) : RecyclerView.Adapter<ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object: DiffUtil.ItemCallback<Menu>(){
-        override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
-            return oldItem.id == newItem.id
-        }
+    private val differ = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Menu>() {
+            override fun areItemsTheSame(oldItem: Menu, newItem: Menu): Boolean {
+                return oldItem.id == newItem.id
+            }
 
-        override fun areContentsTheSame(oldItem: Menu, newItem: Menu): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            override fun areContentsTheSame(oldItem: Menu, newItem: Menu): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-
-    })
+    )
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             AdapterLayoutMode.GRID.ordinal -> {
                 GridFoodItemListViewHolder(
                     binding = ItemGridFoodBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
-                    ), onItemClick
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
+                    onItemClick
                 )
             }
             else -> {
                 LinearFoodItemListViewHolder(
                     binding = ItemLinearFoodBinding.inflate(
-                        LayoutInflater.from(parent.context), parent, false
-                    ), onItemClick
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    ),
+                    onItemClick
                 )
             }
         }
     }
-
 
     override fun getItemCount(): Int {
         return differ.currentList.size
@@ -67,6 +74,4 @@ class FoodListAdapter(
     fun refreshList() {
         notifyItemRangeChanged(0, differ.currentList.size)
     }
-
-
 }

@@ -39,16 +39,16 @@ class HomeFragment : Fragment() {
         CategoryListAdapter {
             viewModel.getMenus(it.name.lowercase())
         }
-
     }
 
     private fun navigateToActivityDetail(it: Menu) {
         DetailActivity.startActivity(requireContext(), it)
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -61,7 +61,6 @@ class HomeFragment : Fragment() {
         observeData()
         setupSwitch()
         setProfileData()
-
     }
 
     private fun setProfileData() {
@@ -122,7 +121,6 @@ class HomeFragment : Fragment() {
                     binding.layoutState.root.isVisible = true
                     binding.layoutState.pbLoading.isVisible = true
                     binding.rvFoods.isVisible = false
-
                 },
                 doOnError = {
                     binding.layoutState.root.isVisible = true
@@ -176,8 +174,5 @@ class HomeFragment : Fragment() {
 
     private fun setupCategoryRecyclerView() {
         binding.rvCategory.adapter = categoryListAdapter
-
     }
-
-
 }

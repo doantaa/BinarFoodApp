@@ -11,7 +11,7 @@ interface CartDataSource {
     fun getCartById(cartId: Int): Flow<CartEntity>
     suspend fun updateCart(cart: CartEntity): Int
     suspend fun deleteCart(cart: CartEntity): Int
-    fun deleteAllCart():Int
+    fun deleteAllCart(): Int
 }
 
 class CartDataSourceImpl(
@@ -41,8 +41,7 @@ class CartDataSourceImpl(
         return dao.deleteCart(cart)
     }
 
-    override fun deleteAllCart() : Int{
+    override fun deleteAllCart(): Int {
         return dao.deleteAllCart()
     }
-
 }
