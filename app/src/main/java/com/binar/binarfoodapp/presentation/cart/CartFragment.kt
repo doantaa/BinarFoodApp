@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.binar.binarfoodapp.R
 import com.binar.binarfoodapp.databinding.FragmentCartBinding
 import com.binar.binarfoodapp.model.Cart
@@ -75,6 +76,7 @@ class CartFragment : Fragment() {
                 binding.layoutState.pbLoading.isVisible = false
                 binding.layoutState.tvError.isVisible = false
                 binding.rvCartList.isVisible = true
+                binding.layoutState.ivState.isVisible = false
                 result.payload?.let { (carts, totalPrice) ->
                     adapter.setData(carts)
                     binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
@@ -84,6 +86,7 @@ class CartFragment : Fragment() {
                     binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
                     binding.rvCartList.isVisible = false
+                    binding.layoutState.ivState.isVisible = false
                 }, doOnError = { err ->
                     binding.layoutState.root.isVisible = true
                     binding.layoutState.pbLoading.isVisible = false
@@ -96,6 +99,8 @@ class CartFragment : Fragment() {
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
                     binding.cvSectionCheckout.isVisible = false
+                    binding.layoutState.ivState.load("https://raw.githubusercontent.com/doantaa/BinarFoodApp-Resource/main/Shopping%20cart.png")
+                    binding.layoutState.ivState.isVisible = true
                     data.payload?.let { (_, totalPrice) ->
                         binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
                     }

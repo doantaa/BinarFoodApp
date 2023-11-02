@@ -32,6 +32,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun observeCounter() {
         viewModel.menuCountLiveData.observe(this) {
+            binding.btnMinus.alpha = if (it == 1) 0.5F else 1F
             binding.tvCounter.text = it.toString()
         }
 

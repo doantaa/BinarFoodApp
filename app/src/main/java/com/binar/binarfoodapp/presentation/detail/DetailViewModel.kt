@@ -17,11 +17,11 @@ class DetailViewModel(
     val menu = extras?.getParcelable<Menu>(DetailActivity.EXTRA_FOOD)
 
     val priceLiveData = MutableLiveData<Int>().apply {
-        postValue(0)
+        postValue(menu?.price)
     }
 
     val menuCountLiveData = MutableLiveData<Int>().apply {
-        postValue(0)
+        postValue(1)
     }
 
     private val _addToCartResult = MutableLiveData<ResultWrapper<Boolean>>()
