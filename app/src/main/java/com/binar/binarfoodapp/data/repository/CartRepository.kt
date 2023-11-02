@@ -44,10 +44,11 @@ class CartRepositoryImpl(
                     Pair(result, totalPrice)
                 }
             }.map {
-                if (it.payload?.first?.isEmpty() == true)
+                if (it.payload?.first?.isEmpty() == true) {
                     ResultWrapper.Empty(it.payload)
-                else
+                } else {
                     it
+                }
             }
             .onStart {
                 emit(ResultWrapper.Loading())
@@ -86,7 +87,6 @@ class CartRepositoryImpl(
             itemQuantity += 1
         }
         return proceedFlow { dataSource.updateCart(modifiedCart.toCartEntity()) > 0 }
-
     }
 
     override suspend fun setOrderNotes(item: Cart): Flow<ResultWrapper<Boolean>> {
@@ -107,7 +107,7 @@ class CartRepositoryImpl(
                 OrderItemRequest(it.menuName, it.itemQuantity, it.orderNotes, it.menuPrice)
             }
             val orderRequest = OrderRequest(
-                username = "username",//username nanti diganti
+                username = "username", // username nanti diganti
                 total = orderItems.map { it.qty?.times((it.price ?: 0)) ?: 0 }.sum(),
                 orders = orderItems
             )

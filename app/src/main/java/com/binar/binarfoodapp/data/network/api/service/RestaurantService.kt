@@ -20,7 +20,7 @@ interface RestaurantService {
     suspend fun getMenus(@Query("c") category: String? = null): MenusResponse
 
     @GET("category")
-    suspend fun getCategories() : CategoriesResponse
+    suspend fun getCategories(): CategoriesResponse
 
     @POST("order")
     suspend fun createOrder(@Body orderRequest: OrderRequest): OrderResponse
@@ -41,6 +41,4 @@ interface RestaurantService {
             return retrofit.create(RestaurantService::class.java)
         }
     }
-
-
 }

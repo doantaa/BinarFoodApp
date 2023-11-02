@@ -83,14 +83,12 @@ class LoginActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
     private fun isFormValid(): Boolean {
         val email = binding.layoutForm.etEmail.text.toString().trim()
         val password = binding.layoutForm.etPassword.text.toString().trim()
 
-        return checkEmailValidation(email)
-                && checkPasswordValidation(password)
-
+        return checkEmailValidation(email) &&
+            checkPasswordValidation(password)
     }
 
     private fun checkEmailValidation(email: String): Boolean {
@@ -118,7 +116,6 @@ class LoginActivity : AppCompatActivity() {
             true
         }
     }
-
 
     private fun doLogin() {
         if (isFormValid()) {

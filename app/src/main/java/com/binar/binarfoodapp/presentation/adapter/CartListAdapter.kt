@@ -15,31 +15,39 @@ import com.binar.binarfoodapp.presentation.adapter.viewholder.CheckoutListViewHo
 class CartListAdapter(private val cartListener: CartListener? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Cart>() {
+    private val differ = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Cart>() {
 
-        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-
-        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
-
-    })
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (cartListener != null) CartItemListViewHolder(
-            ItemCartBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            ), cartListener
-        ) else {
+        return if (cartListener != null) {
+            CartItemListViewHolder(
+                ItemCartBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                cartListener
+            )
+        } else {
             CheckoutListViewHolder(
                 ItemCartCheckoutBinding.inflate(
-                    LayoutInflater.from(parent.context), parent, false
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
             )
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -54,7 +62,6 @@ class CartListAdapter(private val cartListener: CartListener? = null) :
         differ.submitList(menuData)
     }
 }
-
 
 interface CartListener {
     fun onPlusTotalItemCartClicked(cart: Cart)

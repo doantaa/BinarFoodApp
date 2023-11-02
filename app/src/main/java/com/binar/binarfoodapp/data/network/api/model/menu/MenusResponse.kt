@@ -1,6 +1,5 @@
 package com.binar.binarfoodapp.data.network.api.model.menu
 
-
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 

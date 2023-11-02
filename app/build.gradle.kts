@@ -6,6 +6,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 android {
@@ -46,13 +47,43 @@ android {
 
     flavorDimensions += "version"
     productFlavors {
-        create("production"){
+        create("production") {
             buildConfigField("String", "BASE_URL", "\"https://0ae86692-3ea8-487f-a0aa-65f652b80702.mock.pstmn.io/\"")
         }
 
-        create("integration"){
+        create("integration") {
             buildConfigField("String", "BASE_URL", "\"https://0ae86692-3ea8-487f-a0aa-65f652b80702.mock.pstmn.io/\"")
         }
+    }
+
+    lint {
+        // Turns off checks for the issue IDs you specify.
+        disable += "ContentDescription"
+        // If set to true, turns off analysis progress reporting by lint.
+        quiet = true
+        // If set to true (default), stops the build if errors are found.
+        abortOnError = false
+        // If set to true, lint also checks all dependencies as part of its analysis.
+        // Recommended for projects consisting of an app with library dependencies.
+        checkDependencies = true
+    }
+}
+
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
+ktlint {
+    android.set(false)
+    ignoreFailures.set(true)
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+    }
+    kotlinScriptAdditionalPaths {
+        include(fileTree("scripts/"))
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
     }
 }
 
@@ -73,40 +104,40 @@ dependencies {
     //noinspection GradleDependency
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
 
-    //coil
+    // coil
     implementation("io.coil-kt:coil:2.4.0")
 
-    //recyclerview
+    // recyclerview
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
-    //room database lifecycle
+    // room database lifecycle
     implementation("androidx.room:room-ktx:2.6.0")
     ksp("androidx.room:room-compiler:2.6.0")
 
-    //ktx lifecycle
+    // ktx lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
-    //data store
+    // data store
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    //firebase
-    implementation( platform("com.google.firebase:firebase-bom:32.3.1"))
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
 
-    //chucker
+    // chucker
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
 
-    //retrofit & okhttp
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+    // retrofit & okhttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
 
     // Koin
     implementation("io.insert-koin:koin-android:3.5.0")

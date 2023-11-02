@@ -14,23 +14,27 @@ class CategoryListAdapter(
     private val onItemClick: (Category) -> Unit
 ) : RecyclerView.Adapter<CategorySectionViewHolder>() {
 
-    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<Category>() {
-        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-            return oldItem.id == newItem.id
+    private val differ = AsyncListDiffer(
+        this,
+        object : DiffUtil.ItemCallback<Category>() {
+            override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+                return oldItem.hashCode() == newItem.hashCode()
+            }
         }
-
-        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
-
-    })
-
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategorySectionViewHolder {
         return CategorySectionViewHolder(
             binding = ItemCategoryBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            ), onItemClick
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
+            onItemClick
         )
     }
 

@@ -5,6 +5,6 @@ import com.binar.binarfoodapp.data.repository.UserRepository
 
 class SplashViewModel(
     private val repository: UserRepository
-) : ViewModel(){
+) : ViewModel() {
     fun isUserLoggedIn() = repository.isLoggedIn()
 }

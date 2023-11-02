@@ -38,18 +38,18 @@ class RegisterActivity : AppCompatActivity() {
                 binding.pbLoading.isVisible = false
                 navigateToMain()
             }, doOnLoading = {
-                binding.btnRegister.isVisible = false
-                binding.pbLoading.isVisible = true
-            }, doOnError = {
-                binding.btnRegister.isVisible = true
-                binding.btnRegister.isEnabled = true
-                binding.pbLoading.isVisible = false
-                Toast.makeText(
-                    this,
-                    "Register Failed ${it.exception?.message.orEmpty()}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            })
+                    binding.btnRegister.isVisible = false
+                    binding.pbLoading.isVisible = true
+                }, doOnError = {
+                    binding.btnRegister.isVisible = true
+                    binding.btnRegister.isEnabled = true
+                    binding.pbLoading.isVisible = false
+                    Toast.makeText(
+                        this,
+                        "Register Failed ${it.exception?.message.orEmpty()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                })
         }
     }
 
@@ -86,7 +86,8 @@ class RegisterActivity : AppCompatActivity() {
         return checkNameValidation(fullName) && checkEmailValidation(email) && checkPasswordValidation(
             password
         ) && checkPasswordValidation(confirmPassword) && checkPasswordAndConfirmation(
-            password, confirmPassword
+            password,
+            confirmPassword
         )
     }
 
@@ -147,7 +148,6 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-
     private fun doRegister() {
         if (isFormValid()) {
             val fullName = binding.layoutForm.etName.text.toString().trim()
@@ -162,6 +162,5 @@ class RegisterActivity : AppCompatActivity() {
         binding.layoutForm.tilEmail.isVisible = true
         binding.layoutForm.tilPassword.isVisible = true
         binding.layoutForm.tilConfirmPassword.isVisible = true
-
     }
 }

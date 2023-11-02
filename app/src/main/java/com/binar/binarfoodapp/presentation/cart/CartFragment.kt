@@ -23,10 +23,6 @@ class CartFragment : Fragment() {
 
     private lateinit var binding: FragmentCartBinding
 
-    //    private val viewModel: CartViewModel by viewModels {
-//        AppInjection.getCartViewModelFactory(requireContext())
-//    }
-
     private val viewModel: CartViewModel by viewModel()
 
     private val adapter: CartListAdapter by lazy {
@@ -46,13 +42,13 @@ class CartFragment : Fragment() {
             override fun onUserDoneEditingNotes(cart: Cart) {
                 viewModel.setCartNotes(cart)
                 hideKeyboard()
-
             }
         })
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCartBinding.inflate(inflater, container, false)
@@ -84,35 +80,32 @@ class CartFragment : Fragment() {
                     binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
                 }
             }, doOnLoading = {
-                binding.layoutState.root.isVisible = true
-                binding.layoutState.pbLoading.isVisible = true
-                binding.layoutState.tvError.isVisible = false
-                binding.rvCartList.isVisible = false
-            }, doOnError = { err ->
-                binding.layoutState.root.isVisible = true
-                binding.layoutState.pbLoading.isVisible = false
-                binding.layoutState.tvError.isVisible = true
-                binding.layoutState.tvError.text = err.exception?.message.orEmpty()
-                binding.rvCartList.isVisible =  false
-            }, doOnEmpty = { data ->
-                binding.layoutState.root.isVisible = true
-                binding.layoutState.pbLoading.isVisible = false
-                binding.layoutState.tvError.isVisible = true
-                binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
-                binding.cvSectionCheckout.isVisible = false
-                data.payload?.let { (_, totalPrice) ->
-                    binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
-                }
-                binding.rvCartList.isVisible = false
-            })
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = true
+                    binding.layoutState.tvError.isVisible = false
+                    binding.rvCartList.isVisible = false
+                }, doOnError = { err ->
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = err.exception?.message.orEmpty()
+                    binding.rvCartList.isVisible = false
+                }, doOnEmpty = { data ->
+                    binding.layoutState.root.isVisible = true
+                    binding.layoutState.pbLoading.isVisible = false
+                    binding.layoutState.tvError.isVisible = true
+                    binding.layoutState.tvError.text = getString(R.string.text_cart_is_empty)
+                    binding.cvSectionCheckout.isVisible = false
+                    data.payload?.let { (_, totalPrice) ->
+                        binding.tvTotalPrice.text = totalPrice.toCurrencyFormat()
+                    }
+                    binding.rvCartList.isVisible = false
+                })
         }
     }
-
 
     private fun setupRecyclerView() {
         binding.rvCartList.adapter = adapter
         binding.rvCartList.layoutManager = LinearLayoutManager(requireContext())
     }
-
-
 }

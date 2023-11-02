@@ -9,22 +9,22 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 interface FirebaseAuthDataSource {
-    fun isLoggedIn() : Boolean
+    fun isLoggedIn(): Boolean
     fun getCurrentUser(): FirebaseUser?
     fun doLogout(): Boolean
-    @Throws(exceptionClasses = [Exception::class])
-    suspend fun doRegister(fullName: String, email: String, password: String) : Boolean
 
     @Throws(exceptionClasses = [Exception::class])
-    suspend fun doLogin(email: String, password: String) : Boolean
+    suspend fun doRegister(fullName: String, email: String, password: String): Boolean
+
+    @Throws(exceptionClasses = [Exception::class])
+    suspend fun doLogin(email: String, password: String): Boolean
     suspend fun updateProfile(
         fullName: String? = null,
         photoUri: Uri? = null
     ): Boolean
 }
 
-
-class FirebaseAuthDataSourceImpl(private val firebaseAuth: FirebaseAuth): FirebaseAuthDataSource {
+class FirebaseAuthDataSourceImpl(private val firebaseAuth: FirebaseAuth) : FirebaseAuthDataSource {
     override fun isLoggedIn(): Boolean {
         return firebaseAuth.currentUser != null
     }
@@ -52,7 +52,7 @@ class FirebaseAuthDataSourceImpl(private val firebaseAuth: FirebaseAuth): Fireba
 
     @Throws(exceptionClasses = [Exception::class])
     override suspend fun doLogin(email: String, password: String): Boolean {
-        val loginResult = firebaseAuth.signInWithEmailAndPassword(email,password).await()
+        val loginResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
         return loginResult.user != null
     }
 
@@ -65,5 +65,4 @@ class FirebaseAuthDataSourceImpl(private val firebaseAuth: FirebaseAuth): Fireba
         )?.await()
         return true
     }
-
 }

@@ -9,7 +9,6 @@ import com.binar.binarfoodapp.presentation.adapter.CartListener
 import com.binar.binarfoodapp.utils.doneEditing
 import com.binar.binarfoodapp.utils.toCurrencyFormat
 
-
 class CartItemListViewHolder(
     private val binding: ItemCartBinding,
     private val cartListener: CartListener? = null
@@ -32,10 +31,10 @@ class CartItemListViewHolder(
     }
 
     private fun setClickListeners(menu: Cart) {
-        with(binding){
-            btnMinus.setOnClickListener{ cartListener?.onMinusTotalItemCartClicked(menu)}
-            btnPlus.setOnClickListener{cartListener?.onPlusTotalItemCartClicked(menu)}
-            btnRemove.setOnClickListener{cartListener?.onRemoveCartClicked(menu)}
+        with(binding) {
+            btnMinus.setOnClickListener { cartListener?.onMinusTotalItemCartClicked(menu) }
+            btnPlus.setOnClickListener { cartListener?.onPlusTotalItemCartClicked(menu) }
+            btnRemove.setOnClickListener { cartListener?.onRemoveCartClicked(menu) }
         }
     }
 
@@ -50,6 +49,3 @@ class CartItemListViewHolder(
         }
     }
 }
-
-
-

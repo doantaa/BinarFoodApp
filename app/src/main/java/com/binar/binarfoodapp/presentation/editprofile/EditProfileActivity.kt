@@ -19,7 +19,6 @@ class EditProfileActivity : AppCompatActivity() {
 
     private val viewModel: EditProfileViewModel by viewModel()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -54,7 +53,6 @@ class EditProfileActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 val fullName = binding.layoutForm.etName.text.toString()
                 viewModel.updateProfile(fullName)
-
             }
         }
     }

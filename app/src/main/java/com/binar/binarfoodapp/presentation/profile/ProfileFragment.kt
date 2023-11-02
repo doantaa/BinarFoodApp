@@ -14,21 +14,19 @@ import com.binar.binarfoodapp.presentation.authentication.login.LoginActivity
 import com.binar.binarfoodapp.presentation.editprofile.EditProfileActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
     private val viewModel: ProfileViewModel by viewModel()
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,9 +66,8 @@ class ProfileFragment : Fragment() {
                 navigateToLogin()
             }
             .setNegativeButton(getString(R.string.text_no)) { _, _ ->
-                //do nothing
+                // do nothing
             }.create().show()
-
     }
 
     private fun navigateToLogin() {
@@ -93,7 +90,6 @@ class ProfileFragment : Fragment() {
             binding.layoutForm.etName.setText(name)
             binding.layoutForm.etEmail.setText(email)
         }
-
     }
 
     private fun setupForm() {
@@ -102,6 +98,4 @@ class ProfileFragment : Fragment() {
         binding.layoutForm.tilEmail.isVisible = true
         binding.layoutForm.tilEmail.isEnabled = false
     }
-
-
 }

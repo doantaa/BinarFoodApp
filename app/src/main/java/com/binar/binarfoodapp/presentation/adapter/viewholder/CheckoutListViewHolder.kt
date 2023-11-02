@@ -11,7 +11,7 @@ import com.binar.binarfoodapp.model.Cart
 import com.binar.binarfoodapp.utils.toCurrencyFormat
 
 class CheckoutListViewHolder(
-    private val binding: ItemCartCheckoutBinding,
+    private val binding: ItemCartCheckoutBinding
 ) : RecyclerView.ViewHolder(binding.root), ViewHolderBinder<Cart> {
     override fun bind(item: Cart) {
         setCartData(item)
@@ -36,7 +36,6 @@ class CheckoutListViewHolder(
             binding.tvOrderNote.isVisible = false
         }
     }
-
 }
 
 class CheckoutSumarryListViewHolder(
@@ -54,5 +53,4 @@ class CheckoutSumarryListViewHolder(
             binding.tvPrice.text = (item.itemQuantity * item.menuPrice).toCurrencyFormat()
         }
     }
-
 }
