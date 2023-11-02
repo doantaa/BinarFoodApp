@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:fontFamily="@font/inter_semibold"
-        android:text="@string/text_keranjang"
+        android:text="@string/text_cart"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
