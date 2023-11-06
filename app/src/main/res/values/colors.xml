@@ -5,4 +5,6 @@
     <color name="primary">#F8BF40</color>
     <color name="background">#EBE5DD</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="white_transparent">#A4FFFFFF</color>
+    <color name="primary_transparent">#95F8BF40</color>
 </resources>
