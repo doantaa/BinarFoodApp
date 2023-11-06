@@ -141,4 +141,7 @@ dependencies {
 
     // Koin
     implementation("io.insert-koin:koin-android:3.5.0")
+
+    // smooth bottom bar
+    implementation("com.github.ibrahimsn98:SmoothBottomBar:1.7.9")
 }
