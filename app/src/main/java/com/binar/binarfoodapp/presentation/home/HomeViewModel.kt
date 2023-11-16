@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.binar.binarfoodapp.data.local.datastore.UserPreferenceDataSource
 import com.binar.binarfoodapp.data.repository.MenuRepository
 import com.binar.binarfoodapp.data.repository.UserRepository
-import com.binar.binarfoodapp.model.Category
 import com.binar.binarfoodapp.model.Menu
 import com.binar.binarfoodapp.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
@@ -24,22 +23,12 @@ class HomeViewModel(
     val menus: LiveData<ResultWrapper<List<Menu>>>
         get() = _menus
 
-    private val _categories = MutableLiveData<ResultWrapper<List<Category>>>()
-    val categories: LiveData<ResultWrapper<List<Category>>>
-        get() = _categories
+    val categories = repo.getCategories().asLiveData(Dispatchers.IO)
 
     fun getMenus(category: String? = null) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.getMenus(if (category == "all") null else category).collect() { result ->
                 _menus.postValue(result)
-            }
-        }
-    }
-
-    fun getCategories() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.getCategories().collect() { result ->
-                _categories.postValue(result)
             }
         }
     }
