@@ -13,6 +13,7 @@ import com.binar.binarfoodapp.utils.ResultWrapper
 import com.binar.binarfoodapp.utils.proceed
 import com.binar.binarfoodapp.utils.proceedFlow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -23,7 +24,7 @@ interface CartRepository {
     suspend fun increaseCart(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun setOrderNotes(item: Cart): Flow<ResultWrapper<Boolean>>
     suspend fun deleteCart(item: Cart): Flow<ResultWrapper<Boolean>>
-    suspend fun cleanCart()
+    suspend fun cleanCart(): ResultWrapper<Int>
     suspend fun order(carts: List<Cart>): Flow<ResultWrapper<Boolean>>
 }
 
@@ -49,6 +50,9 @@ class CartRepositoryImpl(
                 } else {
                     it
                 }
+            }
+            .catch {
+                emit(ResultWrapper.Error(exception = Exception(it)))
             }
             .onStart {
                 emit(ResultWrapper.Loading())
@@ -97,8 +101,8 @@ class CartRepositoryImpl(
         return proceedFlow { dataSource.deleteCart(item.toCartEntity()) > 0 }
     }
 
-    override suspend fun cleanCart() {
-        proceed { dataSource.deleteAllCart() }
+    override suspend fun cleanCart(): ResultWrapper<Int> {
+        return proceed { dataSource.deleteAllCart() }
     }
 
     override suspend fun order(carts: List<Cart>): Flow<ResultWrapper<Boolean>> {

@@ -69,7 +69,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun invokeData() {
-        viewModel.getCategories()
         viewModel.getMenus()
     }
 
